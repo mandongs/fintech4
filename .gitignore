@@ -4,3 +4,6 @@ data/
 *.xlsx
 .env
 .env*
+build/
+dist/
+*.spec
