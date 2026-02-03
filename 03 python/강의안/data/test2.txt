@@ -1,2 +1,0 @@
-with open을 사용하면 파일을 close 없이도 자동으로 닫아주어 편리함
-with open을 사용하면 파일을 close 없이도 자동으로 닫아주어 편리함2
