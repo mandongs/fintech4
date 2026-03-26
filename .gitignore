@@ -10,4 +10,4 @@ dist/
 *.zip
 _env
 env
-/gemini.env
+.gemini.env

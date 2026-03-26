@@ -1,0 +1,28 @@
+# ===== Core =====
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.13.1
+
+# ===== NLP / Embedding =====
+sentence-transformers==3.0.1
+transformers==4.44.2
+
+# ===== Torch (GPU는 따로 설치) =====
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# ===== Vector DB =====
+faiss-cpu==1.8.0
+
+# ===== Tokenizer =====
+tiktoken==0.7.0
+
+# ===== App / Utils =====
+gradio==5.23.3
+python-dotenv
+
+# ===== LLM (Gemini) =====
+google-genai
+notebook==6
+pdfplumber
