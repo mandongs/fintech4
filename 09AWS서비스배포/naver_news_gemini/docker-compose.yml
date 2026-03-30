@@ -1,0 +1,14 @@
+services:
+  news-chatbot:
+    build: .
+    container_name: news_summary_chatbot
+    # Gradio 호스트 설정과 일치하도록 포트 매핑 (7860)
+    ports:
+      - "7860:7860"
+    # 환경 변수 파일 로드
+    env_file:
+      - .gemini.env
+    # 코드 수정 시 실시간 반영을 원할 경우 볼륨 연결 (개발용)
+    # volumes:
+    #   - .:/app
+    restart: always
