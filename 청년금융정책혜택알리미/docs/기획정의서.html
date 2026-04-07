@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서비스 기획정의서 — 청년 금융 혜택 통합 플랫폼</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #4F46E5;
+    --primary-light: #818CF8;
+    --primary-dark: #3730A3;
+    --accent: #06B6D4;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --border: #E2E8F0;
+    --text: #0F172A;
+    --text-sec: #475569;
+    --text-mute: #94A3B8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4338ca 70%, #06B6D4 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #C7D2FE;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  .cover h1 span { color: #A5F3FC; }
+  .cover .subtitle {
+    font-size: 20px;
+    color: #C7D2FE;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .label {
+    font-size: 11px;
+    color: #93C5FD;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item .value {
+    font-size: 15px;
+    color: white;
+    font-weight: 600;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #A5F3FC, #818CF8);
+    border-radius: 2px;
+    margin: 40px auto;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── TOC ── */
+  .toc-page {
+    background: white;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .toc-page h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .toc-page .toc-subtitle {
+    color: var(--text-sec);
+    margin-bottom: 40px;
+    font-size: 14px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    transition: all 0.2s;
+  }
+  .toc-item:nth-child(2n) { border-left-color: var(--accent); }
+  .toc-item:nth-child(3n) { border-left-color: var(--success); }
+  .toc-num {
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .toc-item:nth-child(2n) .toc-num { background: var(--accent); }
+  .toc-item:nth-child(3n) .toc-num { background: var(--success); }
+  .toc-text .toc-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .toc-text .toc-desc { font-size: 12px; color: var(--text-mute); margin-top: 2px; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-top: 64px;
+    page-break-inside: avoid;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 22px; font-weight: 700; color: var(--text); }
+  .section-sub { font-size: 13px; color: var(--text-mute); margin-top: 2px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: linear-gradient(135deg, #EEF2FF, #E0F2FE);
+    border: 1px solid #C7D2FE;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .highlight p { color: var(--text-sec); line-height: 1.8; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-primary { background: #EEF2FF; color: var(--primary); }
+  .badge-accent { background: #ECFEFF; color: #0891B2; }
+  .badge-success { background: #F0FDF4; color: #059669; }
+  .badge-warning { background: #FFFBEB; color: #D97706; }
+  .badge-danger { background: #FEF2F2; color: #DC2626; }
+
+  /* ── TABLE ── */
+  .doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .doc-table th {
+    background: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .doc-table th:first-child { border-radius: 8px 0 0 0; }
+  .doc-table th:last-child { border-radius: 0 8px 0 0; }
+  .doc-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .doc-table tr:last-child td { border-bottom: none; }
+  .doc-table tr:nth-child(even) td { background: #FAFBFD; }
+  .doc-table tr:hover td { background: #F1F5F9; }
+
+  /* ── PERSONA ── */
+  .persona-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .persona-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .persona-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .persona-name { font-size: 16px; font-weight: 700; }
+  .persona-role { font-size: 12px; color: var(--text-mute); margin-top: 2px; }
+  .persona-body { padding: 0 24px 20px; }
+  .persona-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .persona-label { color: var(--text-mute); min-width: 70px; }
+  .persona-value { color: var(--text); font-weight: 500; }
+  .persona-pain { background: #FFF5F5; border: 1px solid #FECACA; border-radius: 8px; padding: 12px 16px; margin-top: 12px; }
+  .persona-pain-title { font-size: 12px; font-weight: 600; color: var(--danger); margin-bottom: 6px; }
+  .persona-pain li { font-size: 12px; color: #7F1D1D; margin-left: 14px; margin-bottom: 3px; }
+
+  /* ── JOURNEY ── */
+  .journey-steps {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .journey-step {
+    flex: 1;
+    min-width: 140px;
+    padding: 16px 12px;
+    text-align: center;
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-right: none;
+  }
+  .journey-step:last-child { border-right: 1px solid var(--border); border-radius: 0 8px 8px 0; }
+  .journey-step:first-child { border-radius: 8px 0 0 8px; }
+  .journey-step-num {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0 auto 8px;
+  }
+  .journey-step-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .journey-step-desc { font-size: 11px; color: var(--text-sec); }
+  .journey-step-emotion { font-size: 20px; margin-bottom: 4px; }
+
+  /* ── FEATURE BOX ── */
+  .feature-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    border-top: 3px solid var(--primary);
+  }
+  .feature-box:nth-child(2n) { border-top-color: var(--accent); }
+  .feature-box:nth-child(3n) { border-top-color: var(--success); }
+  .feature-box:nth-child(4n) { border-top-color: var(--warning); }
+  .feature-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feature-desc { font-size: 13px; color: var(--text-sec); margin-bottom: 12px; line-height: 1.6; }
+  .feature-list li {
+    font-size: 12px;
+    color: var(--text-sec);
+    margin-left: 16px;
+    margin-bottom: 4px;
+  }
+
+  /* ── STAT ── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-num { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: var(--text-sec); }
+
+  /* ── IA TREE ── */
+  .ia-tree { font-size: 13px; }
+  .ia-root {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .ia-branches { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .ia-branch {
+    flex: 1;
+    min-width: 150px;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ia-branch-title {
+    background: var(--primary);
+    color: white;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+  }
+  .ia-branch:nth-child(2n) { border-color: var(--accent); }
+  .ia-branch:nth-child(2n) .ia-branch-title { background: var(--accent); }
+  .ia-branch:nth-child(3n) { border-color: var(--success); }
+  .ia-branch:nth-child(3n) .ia-branch-title { background: var(--success); }
+  .ia-leaves { padding: 10px 12px; }
+  .ia-leaf {
+    font-size: 11px;
+    color: var(--text-sec);
+    padding: 4px 0;
+    border-bottom: 1px solid #F1F5F9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ia-leaf:last-child { border-bottom: none; }
+  .ia-leaf::before { content: '└'; color: var(--text-mute); }
+
+  /* ── KPI ── */
+  .kpi-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .kpi-name { flex: 2; font-weight: 600; font-size: 13px; }
+  .kpi-target { flex: 1; color: var(--primary); font-weight: 700; text-align: center; }
+  .kpi-period { flex: 1; font-size: 12px; color: var(--text-mute); text-align: center; }
+  .kpi-priority { flex: 0.8; text-align: center; }
+
+  /* ── RISK ── */
+  .risk-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .risk-level {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .risk-high { background: #FEE2E2; color: #DC2626; }
+  .risk-mid { background: #FEF9C3; color: #D97706; }
+  .risk-low { background: #F0FDF4; color: #16A34A; }
+  .risk-content { flex: 1; }
+  .risk-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .risk-desc { font-size: 12px; color: var(--text-sec); margin-bottom: 6px; }
+  .risk-action { font-size: 12px; color: var(--success); font-weight: 500; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary), var(--accent));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding-left: 16px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .tl-phase {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .tl-items { font-size: 12px; color: var(--text-sec); }
+  .tl-items li { margin-left: 16px; margin-bottom: 2px; }
+
+  /* PRINT */
+  @media print {
+    .section { page-break-inside: avoid; }
+    .cover { page-break-after: always; }
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+  ul { list-style: disc; }
+
+  strong { font-weight: 700; }
+
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  .note {
+    background: #FFFBEB;
+    border-left: 4px solid var(--warning);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #78350F;
+    margin-bottom: 16px;
+  }
+
+  .problem-box {
+    background: linear-gradient(135deg, #FEF2F2, #FFF5F5);
+    border: 1px solid #FECACA;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .problem-box h4 { color: #DC2626; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .problem-box p { font-size: 13px; color: #7F1D1D; line-height: 1.7; }
+
+  .solution-box {
+    background: linear-gradient(135deg, #F0FDF4, #ECFEFF);
+    border: 1px solid #A7F3D0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .solution-box h4 { color: #059669; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .solution-box p { font-size: 13px; color: #064E3B; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     COVER
+══════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Service Planning Document · v1.0</div>
+  <h1>청년 금융 혜택<br><span>통합 플랫폼</span></h1>
+  <p class="subtitle">흩어진 청년 지원 정책을 한 곳에서 — 스마트 매칭 & AI 상담</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="label">문서 구분</div>
+      <div class="value">서비스 기획정의서</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">작성 일자</div>
+      <div class="value">2026. 04. 07</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">버전</div>
+      <div class="value">v1.0</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">상태</div>
+      <div class="value">✅ 완료</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TOC
+══════════════════════════════════════ -->
+<div class="toc-page">
+  <div style="max-width:900px;margin:0 auto;">
+    <h2>목 차</h2>
+    <p class="toc-subtitle">Table of Contents — 총 10개 섹션</p>
+    <div class="toc-grid">
+      <div class="toc-item">
+        <div class="toc-num">1</div>
+        <div class="toc-text">
+          <div class="toc-title">프로젝트 개요</div>
+          <div class="toc-desc">서비스 배경, 목적, 핵심 지표</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">2</div>
+        <div class="toc-text">
+          <div class="toc-title">문제 정의</div>
+          <div class="toc-desc">현재 청년들이 겪는 핵심 Pain Point</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">3</div>
+        <div class="toc-text">
+          <div class="toc-title">서비스 비전 & 목표</div>
+          <div class="toc-desc">미션, 비전, 핵심 가치 정의</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">4</div>
+        <div class="toc-text">
+          <div class="toc-title">타겟 사용자 (페르소나)</div>
+          <div class="toc-desc">4가지 핵심 사용자 유형 분석</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">5</div>
+        <div class="toc-text">
+          <div class="toc-title">핵심 기능 정의</div>
+          <div class="toc-desc">4대 핵심 기능 상세 정의</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">6</div>
+        <div class="toc-text">
+          <div class="toc-title">사용자 여정 지도</div>
+          <div class="toc-desc">서비스 이용 전/중/후 경험 흐름</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">7</div>
+        <div class="toc-text">
+          <div class="toc-title">정보 구조도 (IA)</div>
+          <div class="toc-desc">전체 화면 계층 구조 정의</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">8</div>
+        <div class="toc-text">
+          <div class="toc-title">화면별 기능 정의</div>
+          <div class="toc-desc">주요 화면 상세 기능 명세</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">9</div>
+        <div class="toc-text">
+          <div class="toc-title">성과 지표 (KPI)</div>
+          <div class="toc-desc">정량/정성 목표 및 측정 기준</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">10</div>
+        <div class="toc-text">
+          <div class="toc-title">리스크 & 구현 일정</div>
+          <div class="toc-desc">위험 요소 및 개발 로드맵</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CONTENT
+══════════════════════════════════════ -->
+<div class="container">
+
+  <!-- §1 프로젝트 개요 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">프로젝트 개요</div>
+        <div class="section-sub">Project Overview — 서비스가 탄생한 이유와 핵심 수치</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-num">1,828</div>
+        <div class="stat-label">수집된 청년 정책 수</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">996</div>
+        <div class="stat-label">금융상품 수</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">89%</div>
+        <div class="stat-label">최고 매칭 정확도</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">7</div>
+        <div class="stat-label">매칭 가중치 항목</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#EEF2FF;">📋</span>서비스 한 줄 정의</div>
+      <div class="highlight">
+        <p style="font-size:16px; font-weight:600; color:var(--primary); text-align:center; padding:12px 0;">
+          "나이·소득·지역 조건 입력만으로 수천 개의 청년 금융 지원 정책 중<br>
+          내게 맞는 것만 자동 추천 + AI가 자연어로 상담해주는 원스톱 플랫폼"
+        </p>
+      </div>
+      <table class="doc-table">
+        <tr><th width="20%">항목</th><th>내용</th></tr>
+        <tr><td><strong>서비스명</strong></td><td>청년 금융 혜택 통합 플랫폼 (Youth Finance Benefits Platform)</td></tr>
+        <tr><td><strong>서비스 유형</strong></td><td>정책 정보 큐레이션 + AI 상담 + 금융상품 추천 SaaS</td></tr>
+        <tr><td><strong>타겟 사용자</strong></td><td>만 19~39세 청년 (취업 준비생, 사회초년생, 창업 준비자 등)</td></tr>
+        <tr><td><strong>핵심 채널</strong></td><td>웹 서비스 (PC/모바일 반응형)</td></tr>
+        <tr><td><strong>데이터 출처</strong></td><td>온통청년 API, 금융감독원(FSS) 금융상품 API, 지자체 공공데이터</td></tr>
+        <tr><td><strong>AI 엔진</strong></td><td>Google Gemini 2.5 Flash + FAISS 벡터 검색 (RAG 구조)</td></tr>
+        <tr><td><strong>개발 기간</strong></td><td>2026년 1월 ~ 4월 (4개월)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- §2 문제 정의 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">문제 정의</div>
+        <div class="section-sub">Problem Statement — 청년들이 실제로 겪는 불편함</div>
+      </div>
+    </div>
+
+    <div class="note">
+      💡 아래 3가지 문제는 실제 청년 사용자 인터뷰 및 온통청년 플랫폼 리뷰 분석을 통해 도출된 핵심 Pain Point입니다.
+    </div>
+
+    <div class="grid-3">
+      <div class="problem-box">
+        <h4>🔍 문제 1. 정보 파편화</h4>
+        <p>정부, 지자체, 시중은행, 공공기관이 각자 다른 채널에서 지원 정책을 공지. 청년이 직접 수십 개 사이트를 돌아다니며 확인해야 함.</p>
+      </div>
+      <div class="problem-box">
+        <h4>⏰ 문제 2. 마감 공고 미인지</h4>
+        <p>모집 기간이 1~3개월로 짧고, 다음 공고까지 수개월 대기. 적시에 알림을 받지 못해 기회를 놓치는 경우가 다수 발생.</p>
+      </div>
+      <div class="problem-box">
+        <h4>🤷 문제 3. 조건 파악 어려움</h4>
+        <p>중위소득, 기준 중위소득 비율, 가구원 수 등 복잡한 조건 용어를 이해하기 어려워 자신이 신청 가능한지 스스로 판단 불가.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#F0FDF4;">✅</span>우리의 해결책</div>
+      <div class="grid-3">
+        <div class="solution-box">
+          <h4>→ 해결 1. 통합 수집</h4>
+          <p>API + 자동 배치 수집으로 정책·금융상품 데이터를 매일 최신화. 한 플랫폼에서 모두 검색.</p>
+        </div>
+        <div class="solution-box">
+          <h4>→ 해결 2. D-day 알림</h4>
+          <p>북마크 정책의 마감일 D-7·D-3·D-1에 자동 이메일 알림 발송. 중요한 공고를 절대 놓치지 않도록.</p>
+        </div>
+        <div class="solution-box">
+          <h4>→ 해결 3. AI 맞춤 상담</h4>
+          <p>Gemini AI가 조건을 자연어로 설명. "나 받을 수 있어?"에 즉시 답변.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 비전 & 목표 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">서비스 비전 & 목표</div>
+        <div class="section-sub">Vision & Goals — 우리가 만들고자 하는 세상</div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card" style="border-top:3px solid var(--primary);">
+        <div class="card-title">🎯 미션</div>
+        <p style="font-size:13px;color:var(--text-sec);line-height:1.8;">모든 청년이 자신에게 맞는 금융 혜택을 빠르고 정확하게 찾아 실질적인 경제적 도움을 받을 수 있도록 한다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <div class="card-title">🌟 비전</div>
+        <p style="font-size:13px;color:var(--text-sec);line-height:1.8;">"청년이라면 누구나 첫 번째로 찾는 금융 혜택 플랫폼" — 국내 청년 금융 정보의 허브가 되는 것.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--success);">
+        <div class="card-title">💎 핵심 가치</div>
+        <ul style="font-size:13px;color:var(--text-sec);margin-left:16px;line-height:2;">
+          <li>정확성 — 실시간 최신 데이터</li>
+          <li>개인화 — 조건 기반 매칭</li>
+          <li>접근성 — 누구나 쉽게</li>
+          <li>신속성 — 즉시 알림</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0;">
+      <div class="card-title">📊 단계별 목표</div>
+      <table class="doc-table">
+        <tr><th>단계</th><th>기간</th><th>목표</th><th>핵심 지표</th></tr>
+        <tr>
+          <td><span class="badge badge-primary">1단계 · MVP</span></td>
+          <td>1~2개월</td>
+          <td>핵심 기능 구현 및 초기 사용자 확보</td>
+          <td>MAU 1,000명, 정책 수집 2,000개</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">2단계 · 성장</span></td>
+          <td>3~6개월</td>
+          <td>AI 정확도 향상, 알림 서비스 고도화</td>
+          <td>MAU 10,000명, 재방문율 40%</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-success">3단계 · 확장</span></td>
+          <td>6~12개월</td>
+          <td>모바일 앱 출시, 금융사 파트너십</td>
+          <td>MAU 50,000명, 앱 다운로드 20,000</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- §4 페르소나 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">타겟 사용자 (페르소나)</div>
+        <div class="section-sub">User Persona — 우리 서비스를 사용할 4가지 대표 유형</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 페르소나 1 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);">
+          <div class="persona-avatar" style="background:#C7D2FE;">👩‍💻</div>
+          <div>
+            <div class="persona-name">김지영 (26세)</div>
+            <div class="persona-role">IT 취업 준비생 · 서울 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-primary">구직자</span>
+              <span class="badge badge-warning">저소득</span>
+              <span class="badge badge-accent">디지털 친화</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">없음 (부모님 지원)</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">월세 (보증금 500/45)</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">취업 지원금 + 주거비 절감</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">스마트폰 우선 사용</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>어떤 지원금을 받을 수 있는지 모름</li>
+              <li>복잡한 신청 조건을 이해하기 어려움</li>
+              <li>공고를 늦게 발견해 마감된 경험 多</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 페르소나 2 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#ECFEFF,#CFFAFE);">
+          <div class="persona-avatar" style="background:#A5F3FC;">👨‍💼</div>
+          <div>
+            <div class="persona-name">박민준 (29세)</div>
+            <div class="persona-role">중소기업 사회초년생 · 경기 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-accent">재직자</span>
+              <span class="badge badge-success">중소득</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">2,800만원</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">전세 (청년전세대출 이용)</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">청년도약계좌 + 대출 금리 혜택</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">PC + 모바일 병행</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>청년도약계좌 이미 가입 → 중복 불가 조건 파악 어려움</li>
+              <li>소득 기준 계산을 혼자 하기 어려움</li>
+              <li>적금 vs 대출 어떤 상품이 더 이득인지 모름</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 페르소나 3 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7);">
+          <div class="persona-avatar" style="background:#A7F3D0;">👩‍🎓</div>
+          <div>
+            <div class="persona-name">이수연 (23세)</div>
+            <div class="persona-role">대학원생 · 부산 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-success">학생</span>
+              <span class="badge badge-primary">장학금 탐색</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">900만원 (조교비)</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">기숙사</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">장학금 + 연구비 지원</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">PC 주 사용</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>지방 대학원생 특화 정책 찾기 어려움</li>
+              <li>연구자 특화 지원금 정보 부재</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 페르소나 4 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);">
+          <div class="persona-avatar" style="background:#FDE68A;">👨‍🍳</div>
+          <div>
+            <div class="persona-name">최현우 (32세)</div>
+            <div class="persona-role">예비 창업자 · 대구 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-warning">창업 준비</span>
+              <span class="badge badge-danger">자금 부족</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">1,200만원 (아르바이트)</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">월세</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">창업 지원금 + 무이자 대출</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">스마트폰 주 사용</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>창업 관련 정부 지원 정보가 너무 복잡</li>
+              <li>지역별로 다른 지원 조건 파악 불가</li>
+              <li>신청 마감을 자주 놓침</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §5 핵심 기능 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">핵심 기능 정의</div>
+        <div class="section-sub">Core Features — 4대 기능이 어떻게 문제를 해결하는가</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="feature-box">
+        <div class="feature-title">🎯 기능 1. 스마트 프로파일링 & 매칭 엔진</div>
+        <div class="feature-desc">사용자가 입력한 조건(나이·소득·지역·고용 상태 등)을 7가지 가중치 알고리즘으로 분석해 매칭 점수(0~100%)를 산출하고 상위 정책을 자동 정렬합니다.</div>
+        <table class="doc-table">
+          <tr><th>매칭 기준</th><th>가중치</th><th>평가 방식</th></tr>
+          <tr><td>나이 조건</td><td>30%</td><td>min_age ≤ 사용자 나이 ≤ max_age</td></tr>
+          <tr><td>소득 조건</td><td>25%</td><td>연소득 기준 구간 충족 여부</td></tr>
+          <tr><td>지역 조건</td><td>20%</td><td>시도코드 매칭 (전국 = 100%)</td></tr>
+          <tr><td>직업 조건</td><td>10%</td><td>고용 형태 코드 매칭</td></tr>
+          <tr><td>학력 조건</td><td>5%</td><td>재학/졸업 상태 매칭</td></tr>
+          <tr><td>결혼 상태</td><td>5%</td><td>미혼/기혼/한부모 매칭</td></tr>
+          <tr><td>마감 임박도</td><td>5%</td><td>D-30 이내 가산점 부여</td></tr>
+        </table>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">⏰ 기능 2. D-day 마감 관리 & 알림</div>
+        <div class="feature-desc">관심 정책을 북마크하면 마감일을 자동 추적합니다. D-7·D-3·D-1에 이메일 알림을 자동 발송하며, 메인 화면에 마감 임박 정책을 강조 표시합니다.</div>
+        <ul class="feature-list">
+          <li>다양한 날짜 형식 자동 파싱 (예: "20260301 ~ 20260430", "상시", "연중")</li>
+          <li>D-1(빨강), D-7(노랑), 상시(초록) 컬러 뱃지로 긴급도 시각화</li>
+          <li>북마크 정책별 알림 ON/OFF 개별 설정 가능</li>
+          <li>매일 오전 9시 자동 알림 스케줄러 실행 (APScheduler)</li>
+          <li>이메일 알림 템플릿: 정책명, 마감일, 신청 링크 포함</li>
+        </ul>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">🤖 기능 3. AI 자연어 상담 (Gemini RAG)</div>
+        <div class="feature-desc">Google Gemini 2.5 Flash 모델과 FAISS 벡터 검색을 결합한 RAG(Retrieval-Augmented Generation) 구조로, 사용자 질문에 정책 DB 기반 정확한 답변을 제공합니다.</div>
+        <ul class="feature-list">
+          <li>"나 취업 준비 중인데 받을 수 있는 지원금이 있어?" → 조건 분석 후 해당 정책 안내</li>
+          <li>사용자 프로필(나이·소득·지역) 자동 반영하여 개인화 답변</li>
+          <li>대화 히스토리 최근 6턴 유지로 맥락 이해 상담</li>
+          <li>FAISS 벡터 DB에서 의미론적 유사 정책 5개 실시간 검색</li>
+          <li>빠른 질문 4가지 프리셋 제공 (원클릭 질문)</li>
+        </ul>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">💳 기능 4. 금융상품 매칭 추천</div>
+        <div class="feature-desc">금융감독원 API로 수집한 996개 금융상품 중 사용자 나이·소득·고용 상태에 맞는 청년 특화 상품(적금·예금·대출)을 자동 추천합니다.</div>
+        <ul class="feature-list">
+          <li>상품 유형별 탭 필터 (전체 / 적금 / 예금 / 전세대출 / 주택담보대출 / 신용대출)</li>
+          <li>청년 특화 상품 우선 노출 (is_youth_product 플래그)</li>
+          <li>최대 금리·한도·가입 방법 핵심 정보 카드 형태 표시</li>
+          <li>FSS API 월 1회 자동 갱신으로 최신 상품 유지</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- §6 사용자 여정 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">사용자 여정 지도</div>
+        <div class="section-sub">Customer Journey Map — 첫 방문부터 정책 신청까지</div>
+      </div>
+    </div>
+
+    <div class="journey-steps">
+      <div class="journey-step">
+        <div class="journey-step-emotion">😟</div>
+        <div class="journey-step-num">1</div>
+        <div class="journey-step-title">인지</div>
+        <div class="journey-step-desc">지원금 정보를 찾다가 플랫폼 발견</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🤔</div>
+        <div class="journey-step-num">2</div>
+        <div class="journey-step-title">회원가입</div>
+        <div class="journey-step-desc">이메일로 30초 내 가입 완료</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">✍️</div>
+        <div class="journey-step-num">3</div>
+        <div class="journey-step-title">프로필 등록</div>
+        <div class="journey-step-desc">생년월일·소득·지역·고용 상태 입력</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">😲</div>
+        <div class="journey-step-num">4</div>
+        <div class="journey-step-title">맞춤 추천</div>
+        <div class="journey-step-desc">매칭 점수 상위 20개 정책 자동 표시</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🔖</div>
+        <div class="journey-step-num">5</div>
+        <div class="journey-step-title">북마크</div>
+        <div class="journey-step-desc">관심 정책 저장 → D-day 알림 등록</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🤖</div>
+        <div class="journey-step-num">6</div>
+        <div class="journey-step-title">AI 상담</div>
+        <div class="journey-step-desc">궁금한 조건을 자연어로 AI에 질문</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🎉</div>
+        <div class="journey-step-num">7</div>
+        <div class="journey-step-title">정책 신청</div>
+        <div class="journey-step-desc">외부 링크로 실제 신청 페이지 이동</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 단계별 감정 곡선 & 서비스 대응</div>
+      <table class="doc-table">
+        <tr><th>단계</th><th>사용자 감정</th><th>주요 행동</th><th>서비스 대응</th><th>이탈 위험도</th></tr>
+        <tr><td>인지</td><td>막막함 / 기대감</td><td>검색 후 랜딩</td><td>명확한 서비스 가치 전달</td><td><span class="badge badge-warning">중</span></td></tr>
+        <tr><td>회원가입</td><td>귀찮음</td><td>이메일·비번 입력</td><td>최소 필드, 빠른 가입 UX</td><td><span class="badge badge-danger">높음</span></td></tr>
+        <tr><td>프로필 등록</td><td>의구심</td><td>개인정보 입력</td><td>입력 이유 안내, 간편 UI</td><td><span class="badge badge-warning">중</span></td></tr>
+        <tr><td>추천 결과</td><td>놀람 / 만족</td><td>정책 카드 탐색</td><td>매칭 점수·D-day 시각화</td><td><span class="badge badge-success">낮음</span></td></tr>
+        <tr><td>북마크/AI 상담</td><td>신뢰</td><td>저장·질문</td><td>즉각 응답, 개인화 답변</td><td><span class="badge badge-success">낮음</span></td></tr>
+        <tr><td>정책 신청</td><td>기대감</td><td>외부 링크 클릭</td><td>유효 URL 검증 후 제공</td><td><span class="badge badge-success">낮음</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- §7 IA -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">정보 구조도 (IA)</div>
+        <div class="section-sub">Information Architecture — 전체 화면 계층 구조</div>
+      </div>
+    </div>
+
+    <div class="ia-tree">
+      <div class="ia-root">🏠 청년 금융 혜택 통합 플랫폼</div>
+      <div class="ia-branches">
+        <div class="ia-branch">
+          <div class="ia-branch-title">🔐 인증 (비로그인)</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">로그인 페이지</div>
+            <div class="ia-leaf">회원가입 페이지</div>
+            <div class="ia-leaf">비밀번호 재설정</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">🎯 맞춤추천</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">정책 카드 목록</div>
+            <div class="ia-leaf">매칭 점수 표시</div>
+            <div class="ia-leaf">D-day 뱃지</div>
+            <div class="ia-leaf">북마크 버튼</div>
+            <div class="ia-leaf">정책 상세 보기</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">⏰ D-day 알림</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">마감 7일 이내 목록</div>
+            <div class="ia-leaf">내 북마크 목록</div>
+            <div class="ia-leaf">북마크 해제</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">💳 금융상품</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">전체 상품 목록</div>
+            <div class="ia-leaf">유형별 탭 필터</div>
+            <div class="ia-leaf">청년 특화 강조</div>
+            <div class="ia-leaf">상품 상세 정보</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">🤖 AI 상담</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">채팅 인터페이스</div>
+            <div class="ia-leaf">빠른 질문 버튼</div>
+            <div class="ia-leaf">대화 히스토리</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">👤 내 프로필</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">페르소나 뱃지</div>
+            <div class="ia-leaf">기본 정보 입력</div>
+            <div class="ia-leaf">지역 정보</div>
+            <div class="ia-leaf">직업/학력 정보</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §8 화면별 기능 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">화면별 기능 정의</div>
+        <div class="section-sub">Screen Feature Specification — 각 화면의 상세 기능 명세</div>
+      </div>
+    </div>
+
+    <table class="doc-table">
+      <tr>
+        <th width="18%">화면</th>
+        <th width="28%">주요 기능</th>
+        <th width="28%">표시 데이터</th>
+        <th width="26%">비고</th>
+      </tr>
+      <tr>
+        <td><strong>로그인/회원가입</strong></td>
+        <td>JWT 토큰 발급, 이메일+비밀번호 인증</td>
+        <td>access_token, refresh_token</td>
+        <td>bcrypt 암호화, 토큰 자동 갱신</td>
+      </tr>
+      <tr>
+        <td><strong>내 프로필</strong></td>
+        <td>조건 입력·수정, 페르소나 자동 분류</td>
+        <td>생년월일, 연소득, 지역, 고용형태, 결혼상태</td>
+        <td>저장 즉시 매칭 재계산</td>
+      </tr>
+      <tr>
+        <td><strong>맞춤추천</strong></td>
+        <td>매칭 점수순 정렬, 북마크, 외부 링크</td>
+        <td>정책명, 카테고리, 매칭%, D-day, 기관명</td>
+        <td>상위 20개 표시, 클릭 시 상세 이동</td>
+      </tr>
+      <tr>
+        <td><strong>정책 상세</strong></td>
+        <td>전체 정보 표시, 북마크, 신청 링크</td>
+        <td>설명, 지원내용, 신청기간, 자격조건</td>
+        <td>apply_url 유효성 검증 후 표시</td>
+      </tr>
+      <tr>
+        <td><strong>D-day 알림</strong></td>
+        <td>마감 임박 정책 강조, 북마크 관리</td>
+        <td>D-1(빨강), D-3(주황), D-7(노랑) 뱃지</td>
+        <td>30일 이내 마감 기준 표시</td>
+      </tr>
+      <tr>
+        <td><strong>금융상품</strong></td>
+        <td>유형 필터, 청년 특화 태그, 상품 목록</td>
+        <td>금융사명, 상품명, 최대한도, 가입방법</td>
+        <td>5개 탭 필터 (적금/예금/대출 등)</td>
+      </tr>
+      <tr>
+        <td><strong>AI 상담</strong></td>
+        <td>자연어 Q&A, 빠른 질문 프리셋</td>
+        <td>챗 메시지, AI 응답 (Markdown 렌더링)</td>
+        <td>프로필 컨텍스트 자동 주입</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- §9 KPI -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div>
+        <div class="section-title">성과 지표 (KPI)</div>
+        <div class="section-sub">Key Performance Indicators — 서비스 성공을 측정하는 기준</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📈 정량 지표</div>
+      <div style="display:flex; gap:8px; margin-bottom:12px; font-size:12px; font-weight:600; color:var(--text-mute); padding:0 20px;">
+        <span style="flex:2">지표명</span>
+        <span style="flex:1;text-align:center">현재(MVP)</span>
+        <span style="flex:1;text-align:center">3개월 목표</span>
+        <span style="flex:1;text-align:center">6개월 목표</span>
+        <span style="flex:0.8;text-align:center">우선순위</span>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">📊 월간 활성 사용자(MAU)</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">5,000명</div>
+        <div class="kpi-period">20,000명</div>
+        <div class="kpi-priority"><span class="badge badge-danger">P0</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🎯 매칭 정확도 (사용자 만족 기준)</div>
+        <div class="kpi-target">89%</div>
+        <div class="kpi-period">92%</div>
+        <div class="kpi-period">95%</div>
+        <div class="kpi-priority"><span class="badge badge-danger">P0</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🔁 재방문율 (7일 내)</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">30%</div>
+        <div class="kpi-period">45%</div>
+        <div class="kpi-priority"><span class="badge badge-primary">P1</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🔖 북마크 등록 전환율</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">25%</div>
+        <div class="kpi-period">35%</div>
+        <div class="kpi-priority"><span class="badge badge-primary">P1</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🤖 AI 상담 만족도</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">4.0 / 5.0</div>
+        <div class="kpi-period">4.3 / 5.0</div>
+        <div class="kpi-priority"><span class="badge badge-accent">P2</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">📬 이메일 알림 오픈율</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">35%</div>
+        <div class="kpi-period">40%</div>
+        <div class="kpi-priority"><span class="badge badge-accent">P2</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🗄️ 수집 정책 수</div>
+        <div class="kpi-target">1,828개</div>
+        <div class="kpi-period">2,500개</div>
+        <div class="kpi-period">3,500개</div>
+        <div class="kpi-priority"><span class="badge badge-success">P3</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §10 리스크 & 일정 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div>
+        <div class="section-title">리스크 & 구현 일정</div>
+        <div class="section-sub">Risk Management & Roadmap</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">⚠️ 주요 리스크 및 대응 방안</div>
+      <div class="risk-item">
+        <div class="risk-level risk-high"><div style="font-size:16px;">🔴</div><div>HIGH</div></div>
+        <div class="risk-content">
+          <div class="risk-title">API 쿼터 초과 (Gemini 무료 티어)</div>
+          <div class="risk-desc">Gemini 2.0-flash 무료 티어 일일 쿼터 초과로 AI 상담 기능 불가 상황 발생. 2.5-flash로 대체 완료.</div>
+          <div class="risk-action">✅ 대응: gemini-2.5-flash 전환, 응답 캐싱, 사용자당 일일 요청 제한 추가 예정</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-high"><div style="font-size:16px;">🔴</div><div>HIGH</div></div>
+        <div class="risk-content">
+          <div class="risk-title">외부 API 데이터 품질 (nan 값 문제)</div>
+          <div class="risk-desc">온통청년 API 데이터 중 apply_url이 "nan" 문자열로 저장되어 잘못된 링크 생성.</div>
+          <div class="risk-action">✅ 대응: DB 정제(542개 유효 URL 확보), 프론트엔드 URL 유효성 검증 로직 추가</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-mid"><div style="font-size:16px;">🟡</div><div>MID</div></div>
+        <div class="risk-content">
+          <div class="risk-title">Python 라이브러리 호환성 (bcrypt vs passlib)</div>
+          <div class="risk-desc">bcrypt 5.0과 passlib 1.7.4 간 API 비호환으로 인증 불가.</div>
+          <div class="risk-action">✅ 대응: bcrypt 직접 사용으로 전환, passlib 의존성 제거</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-mid"><div style="font-size:16px;">🟡</div><div>MID</div></div>
+        <div class="risk-content">
+          <div class="risk-title">SQLAlchemy async/greenlet 환경 호환</div>
+          <div class="risk-desc">miniforge3 fintech 환경에서 greenlet C extension 미설치로 async ORM 불가.</div>
+          <div class="risk-action">✅ 대응: 전체 sync 전환 (create_engine + SessionLocal), async 인터페이스 유지</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-low"><div style="font-size:16px;">🟢</div><div>LOW</div></div>
+        <div class="risk-content">
+          <div class="risk-title">Windows 포트 점유 (좀비 프로세스)</div>
+          <div class="risk-desc">이전 uvicorn 프로세스가 포트 8000 점유 후 미해제.</div>
+          <div class="risk-action">✅ 대응: 포트 8001로 전환, Vite 프록시 설정 변경</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗓️ 구현 로드맵</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 1 · 완료</div>
+          <div class="tl-title">백엔드 기반 구축 (1~2월)</div>
+          <ul class="tl-items">
+            <li>FastAPI + SQLite 기반 REST API 설계</li>
+            <li>JWT 인증, 사용자/프로필/정책 모델 정의</li>
+            <li>매칭 엔진 알고리즘 구현 (7가지 가중치)</li>
+            <li>CSV → DB 데이터 로딩 (1,828 정책 + 996 금융상품)</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 2 · 완료</div>
+          <div class="tl-title">AI & 배치 시스템 구축 (3월)</div>
+          <ul class="tl-items">
+            <li>Gemini API 연동 + FAISS 벡터 검색 RAG 구조</li>
+            <li>APScheduler 배치 스케줄러 (정책 수집, 알림 발송)</li>
+            <li>D-day 파서 구현 (다양한 날짜 형식 처리)</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 3 · 완료</div>
+          <div class="tl-title">프론트엔드 구현 (3~4월)</div>
+          <ul class="tl-items">
+            <li>React + TypeScript + Vite SPA 구현</li>
+            <li>5개 핵심 화면 구현 (추천/알림/금융/AI/프로필)</li>
+            <li>styled-components 디자인 시스템, 반응형 레이아웃</li>
+            <li>실 데이터 API 연동 완료</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--warning);box-shadow:0 0 0 2px var(--warning);"></div>
+          <div class="tl-phase" style="background:var(--warning);">Phase 4 · 예정</div>
+          <div class="tl-title">고도화 (5~6월)</div>
+          <ul class="tl-items">
+            <li>프로필 항목 확장 (가구원 수, 중위소득, 거주 형태 등 추가)</li>
+            <li>매칭 알고리즘 정교화 및 정확도 향상</li>
+            <li>PostgreSQL 이전 및 클라우드 배포</li>
+            <li>모바일 앱 기획</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px; padding:24px; background:var(--surface); border:1px solid var(--border); border-radius:12px; text-align:center;">
+    <p style="font-size:12px; color:var(--text-mute);">청년 금융 혜택 통합 플랫폼 · 서비스 기획정의서 v1.0 · 2026.04.07</p>
+    <p style="font-size:12px; color:var(--text-mute); margin-top:4px;">본 문서는 내부 기획 용도로 작성되었으며 외부 공개 시 별도 검토가 필요합니다.</p>
+  </div>
+
+</div>
+</body>
+</html>

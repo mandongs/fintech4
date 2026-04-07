@@ -1,0 +1,2858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>청년 금융 혜택 통합 플랫폼 — 기획 및 개발 정의서</title>
+<style>
+/* ===== 기획정의서 스타일 ===== */
+
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #4F46E5;
+    --primary-light: #818CF8;
+    --primary-dark: #3730A3;
+    --accent: #06B6D4;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --border: #E2E8F0;
+    --text: #0F172A;
+    --text-sec: #475569;
+    --text-mute: #94A3B8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4338ca 70%, #06B6D4 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #C7D2FE;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  .cover h1 span { color: #A5F3FC; }
+  .cover .subtitle {
+    font-size: 20px;
+    color: #C7D2FE;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .label {
+    font-size: 11px;
+    color: #93C5FD;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item .value {
+    font-size: 15px;
+    color: white;
+    font-weight: 600;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #A5F3FC, #818CF8);
+    border-radius: 2px;
+    margin: 40px auto;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── TOC ── */
+  .toc-page {
+    background: white;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .toc-page h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .toc-page .toc-subtitle {
+    color: var(--text-sec);
+    margin-bottom: 40px;
+    font-size: 14px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    transition: all 0.2s;
+  }
+  .toc-item:nth-child(2n) { border-left-color: var(--accent); }
+  .toc-item:nth-child(3n) { border-left-color: var(--success); }
+  .toc-num {
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .toc-item:nth-child(2n) .toc-num { background: var(--accent); }
+  .toc-item:nth-child(3n) .toc-num { background: var(--success); }
+  .toc-text .toc-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .toc-text .toc-desc { font-size: 12px; color: var(--text-mute); margin-top: 2px; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-top: 64px;
+    page-break-inside: avoid;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 22px; font-weight: 700; color: var(--text); }
+  .section-sub { font-size: 13px; color: var(--text-mute); margin-top: 2px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: linear-gradient(135deg, #EEF2FF, #E0F2FE);
+    border: 1px solid #C7D2FE;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .highlight p { color: var(--text-sec); line-height: 1.8; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-primary { background: #EEF2FF; color: var(--primary); }
+  .badge-accent { background: #ECFEFF; color: #0891B2; }
+  .badge-success { background: #F0FDF4; color: #059669; }
+  .badge-warning { background: #FFFBEB; color: #D97706; }
+  .badge-danger { background: #FEF2F2; color: #DC2626; }
+
+  /* ── TABLE ── */
+  .doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .doc-table th {
+    background: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .doc-table th:first-child { border-radius: 8px 0 0 0; }
+  .doc-table th:last-child { border-radius: 0 8px 0 0; }
+  .doc-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .doc-table tr:last-child td { border-bottom: none; }
+  .doc-table tr:nth-child(even) td { background: #FAFBFD; }
+  .doc-table tr:hover td { background: #F1F5F9; }
+
+  /* ── PERSONA ── */
+  .persona-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .persona-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .persona-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .persona-name { font-size: 16px; font-weight: 700; }
+  .persona-role { font-size: 12px; color: var(--text-mute); margin-top: 2px; }
+  .persona-body { padding: 0 24px 20px; }
+  .persona-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .persona-label { color: var(--text-mute); min-width: 70px; }
+  .persona-value { color: var(--text); font-weight: 500; }
+  .persona-pain { background: #FFF5F5; border: 1px solid #FECACA; border-radius: 8px; padding: 12px 16px; margin-top: 12px; }
+  .persona-pain-title { font-size: 12px; font-weight: 600; color: var(--danger); margin-bottom: 6px; }
+  .persona-pain li { font-size: 12px; color: #7F1D1D; margin-left: 14px; margin-bottom: 3px; }
+
+  /* ── JOURNEY ── */
+  .journey-steps {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .journey-step {
+    flex: 1;
+    min-width: 140px;
+    padding: 16px 12px;
+    text-align: center;
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-right: none;
+  }
+  .journey-step:last-child { border-right: 1px solid var(--border); border-radius: 0 8px 8px 0; }
+  .journey-step:first-child { border-radius: 8px 0 0 8px; }
+  .journey-step-num {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0 auto 8px;
+  }
+  .journey-step-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .journey-step-desc { font-size: 11px; color: var(--text-sec); }
+  .journey-step-emotion { font-size: 20px; margin-bottom: 4px; }
+
+  /* ── FEATURE BOX ── */
+  .feature-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    border-top: 3px solid var(--primary);
+  }
+  .feature-box:nth-child(2n) { border-top-color: var(--accent); }
+  .feature-box:nth-child(3n) { border-top-color: var(--success); }
+  .feature-box:nth-child(4n) { border-top-color: var(--warning); }
+  .feature-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feature-desc { font-size: 13px; color: var(--text-sec); margin-bottom: 12px; line-height: 1.6; }
+  .feature-list li {
+    font-size: 12px;
+    color: var(--text-sec);
+    margin-left: 16px;
+    margin-bottom: 4px;
+  }
+
+  /* ── STAT ── */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-num { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: var(--text-sec); }
+
+  /* ── IA TREE ── */
+  .ia-tree { font-size: 13px; }
+  .ia-root {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .ia-branches { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .ia-branch {
+    flex: 1;
+    min-width: 150px;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ia-branch-title {
+    background: var(--primary);
+    color: white;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+  }
+  .ia-branch:nth-child(2n) { border-color: var(--accent); }
+  .ia-branch:nth-child(2n) .ia-branch-title { background: var(--accent); }
+  .ia-branch:nth-child(3n) { border-color: var(--success); }
+  .ia-branch:nth-child(3n) .ia-branch-title { background: var(--success); }
+  .ia-leaves { padding: 10px 12px; }
+  .ia-leaf {
+    font-size: 11px;
+    color: var(--text-sec);
+    padding: 4px 0;
+    border-bottom: 1px solid #F1F5F9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ia-leaf:last-child { border-bottom: none; }
+  .ia-leaf::before { content: '└'; color: var(--text-mute); }
+
+  /* ── KPI ── */
+  .kpi-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .kpi-name { flex: 2; font-weight: 600; font-size: 13px; }
+  .kpi-target { flex: 1; color: var(--primary); font-weight: 700; text-align: center; }
+  .kpi-period { flex: 1; font-size: 12px; color: var(--text-mute); text-align: center; }
+  .kpi-priority { flex: 0.8; text-align: center; }
+
+  /* ── RISK ── */
+  .risk-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .risk-level {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .risk-high { background: #FEE2E2; color: #DC2626; }
+  .risk-mid { background: #FEF9C3; color: #D97706; }
+  .risk-low { background: #F0FDF4; color: #16A34A; }
+  .risk-content { flex: 1; }
+  .risk-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .risk-desc { font-size: 12px; color: var(--text-sec); margin-bottom: 6px; }
+  .risk-action { font-size: 12px; color: var(--success); font-weight: 500; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary), var(--accent));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding-left: 16px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .tl-phase {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .tl-items { font-size: 12px; color: var(--text-sec); }
+  .tl-items li { margin-left: 16px; margin-bottom: 2px; }
+
+  /* PRINT */
+  @media print {
+    .section { page-break-inside: avoid; }
+    .cover { page-break-after: always; }
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+  ul { list-style: disc; }
+
+  strong { font-weight: 700; }
+
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  .note {
+    background: #FFFBEB;
+    border-left: 4px solid var(--warning);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #78350F;
+    margin-bottom: 16px;
+  }
+
+  .problem-box {
+    background: linear-gradient(135deg, #FEF2F2, #FFF5F5);
+    border: 1px solid #FECACA;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .problem-box h4 { color: #DC2626; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .problem-box p { font-size: 13px; color: #7F1D1D; line-height: 1.7; }
+
+  .solution-box {
+    background: linear-gradient(135deg, #F0FDF4, #ECFEFF);
+    border: 1px solid #A7F3D0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .solution-box h4 { color: #059669; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .solution-box p { font-size: 13px; color: #064E3B; line-height: 1.7; }
+
+/* ===== 개발상세정의서 스타일 ===== */
+
+  :root {
+    --primary: #4F46E5;
+    --primary-light: #818CF8;
+    --primary-dark: #3730A3;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --info: #3B82F6;
+    --text: #1E293B;
+    --text-sec: #475569;
+    --text-muted: #94A3B8;
+    --border: #E2E8F0;
+    --surface: #FFFFFF;
+    --bg: #F8FAFC;
+    --code-bg: #1E293B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 40%, #4F46E5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+    top: -200px; right: -200px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+    bottom: -150px; left: -100px;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover h1 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover h1 span { color: #A5B4FC; }
+  .cover-sub {
+    font-size: 20px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-desc {
+    color: rgba(255,255,255,0.55);
+    font-size: 14px;
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta strong { color: white; display: block; margin-bottom: 4px; font-size: 15px; }
+
+  /* TOC */
+  .toc-page {
+    background: white;
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-inner { max-width: 860px; margin: 0 auto; }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .toc-item:hover { border-color: var(--primary); background: #EEF2FF; }
+  .toc-num {
+    width: 32px; height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .toc-label { font-size: 14px; font-weight: 500; }
+
+  /* SECTION */
+  .section {
+    background: white;
+    margin-bottom: 4px;
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-inner { max-width: 860px; margin: 0 auto; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--primary);
+  }
+  .section-num {
+    width: 44px; height: 44px;
+    background: var(--primary);
+    color: white;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 24px; font-weight: 700; }
+  .section-desc { font-size: 14px; color: var(--text-sec); margin-top: 4px; }
+
+  /* SUBSECTION */
+  .sub { margin-bottom: 32px; }
+  .sub-title {
+    font-size: 16px; font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sub-title::before {
+    content: '';
+    width: 4px; height: 18px;
+    background: var(--primary);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    background: var(--surface);
+  }
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--text-sec); line-height: 1.5; }
+
+  /* TABLES */
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #EEF2FF; }
+  th {
+    padding: 12px 14px;
+    font-size: 12px; font-weight: 700;
+    color: var(--primary);
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--primary);
+  }
+  td {
+    padding: 11px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:hover td { background: #F8FAFC; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-green { background: #DCFCE7; color: #15803D; }
+  .badge-blue { background: #DBEAFE; color: #1D4ED8; }
+  .badge-purple { background: #EDE9FE; color: #7C3AED; }
+  .badge-orange { background: #FEF3C7; color: #D97706; }
+  .badge-red { background: #FEE2E2; color: #B91C1C; }
+  .badge-gray { background: #F1F5F9; color: #475569; }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: var(--code-bg);
+    color: #E2E8F0;
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    white-space: pre;
+  }
+  .kw { color: #C792EA; }
+  .fn { color: #82AAFF; }
+  .str { color: #C3E88D; }
+  .cmt { color: #546E7A; font-style: italic; }
+  .num { color: #F78C6C; }
+
+  /* ARCH DIAGRAM */
+  .arch {
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .arch-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .arch-box {
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .arch-box.frontend { background: #EEF2FF; color: #4F46E5; border: 2px solid #818CF8; }
+  .arch-box.api { background: #DCFCE7; color: #15803D; border: 2px solid #4ADE80; }
+  .arch-box.service { background: #FEF9C3; color: #A16207; border: 2px solid #FCD34D; }
+  .arch-box.db { background: #FEE2E2; color: #B91C1C; border: 2px solid #FCA5A5; }
+  .arch-box.ai { background: #EDE9FE; color: #7C3AED; border: 2px solid #C4B5FD; }
+  .arch-box.ext { background: #F0FDF4; color: #166534; border: 2px solid #86EFAC; }
+  .arch-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+  .arch-divider {
+    width: 100%;
+    border-top: 1px dashed var(--border);
+    margin: 12px 0;
+  }
+
+  /* ERD */
+  .erd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .erd-table {
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 13px;
+  }
+  .erd-header {
+    background: var(--primary);
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+  }
+  .erd-row {
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+  }
+  .erd-row:last-child { border-bottom: none; }
+  .col-type { color: var(--text-muted); font-family: monospace; font-size: 11px; }
+  .erd-pk { background: #FEF9C3; }
+  .erd-fk { background: #EEF2FF; }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+  .flow-step {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .flow-step.active { border-color: var(--primary); background: #EEF2FF; color: var(--primary); font-weight: 600; }
+  .flow-arrow { color: var(--text-muted); padding: 0 4px; font-size: 16px; }
+
+  /* HIGHLIGHT */
+  .highlight {
+    border-left: 4px solid var(--primary);
+    background: #EEF2FF;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--text-sec);
+  }
+  .highlight strong { color: var(--primary); }
+  .warn-box {
+    border-left: 4px solid var(--warning);
+    background: #FFFBEB;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #92400E;
+  }
+
+  /* CHIPS */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .chip {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1.5px solid;
+  }
+  .chip-blue { background: #EFF6FF; color: #1D4ED8; border-color: #93C5FD; }
+  .chip-purple { background: #F5F3FF; color: #7C3AED; border-color: #C4B5FD; }
+  .chip-green { background: #F0FDF4; color: #15803D; border-color: #86EFAC; }
+  .chip-orange { background: #FFF7ED; color: #C2410C; border-color: #FDBA74; }
+  .chip-gray { background: #F8FAFC; color: #475569; border-color: #CBD5E1; }
+
+  /* STEP LIST */
+  ol.step-list {
+    counter-reset: step;
+    list-style: none;
+  }
+  ol.step-list li {
+    counter-increment: step;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--text-sec);
+    line-height: 1.6;
+  }
+  ol.step-list li::before {
+    content: counter(step);
+    min-width: 26px; height: 26px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: #1E293B;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 40px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .footer strong { color: rgba(255,255,255,0.85); }
+
+  @media (max-width: 768px) {
+    .cover h1 { font-size: 32px; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .erd-grid { grid-template-columns: 1fr; }
+    .cover-meta { flex-direction: column; gap: 16px; }
+    .section { padding: 40px 20px; }
+  }
+
+/* ===== 인쇄/PDF 오버라이드 ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
+
+/* ── PPT 16:9 페이지 설정 ── */
+@page {
+  size: 33.867cm 19.05cm;   /* 1920×1080 기준 16:9 */
+  margin: 1.2cm 1.8cm;
+}
+
+* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+body {
+  font-family: 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  background: #F8FAFC;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+/* 섹션마다 새 페이지 */
+.section, .toc-page { page-break-before: always; }
+.cover { page-break-after: always; }
+
+/* 두 번째 문서 시작 구분 */
+.doc-separator {
+  page-break-before: always;
+  background: linear-gradient(135deg,#1E1B4B,#4F46E5);
+  min-height: 19.05cm;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: white; text-align: center;
+}
+.doc-separator h2 { font-size: 28px; font-weight: 800; letter-spacing:-1px; margin-bottom:12px; }
+.doc-separator p  { font-size: 14px; opacity: .7; }
+
+/* 커버 전체화면 */
+.cover {
+  min-height: 19.05cm !important;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+
+/* 레이아웃 컴팩트 조정 */
+.section { padding: 28px 32px !important; }
+.section-inner, .toc-inner { max-width: 100% !important; }
+.container { padding: 28px 32px !important; }
+.toc-page { padding: 28px 32px !important; }
+.toc-grid { grid-template-columns: 1fr 1fr; gap: 8px !important; margin-top: 16px !important; }
+.card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important; gap: 10px !important; }
+.erd-grid  { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important; }
+.stat-grid { grid-template-columns: repeat(4,1fr) !important; }
+
+/* 폰트 크기 인쇄 조정 */
+.cover h1   { font-size: 38px !important; }
+.cover-sub  { font-size: 15px !important; }
+.section-title { font-size: 18px !important; }
+.sub-title  { font-size: 13px !important; }
+h1          { font-size: 18px !important; }
+h2          { font-size: 15px !important; }
+h3          { font-size: 13px !important; }
+p, td, li   { font-size: 11px !important; }
+th          { font-size: 10px !important; }
+.code-block { font-size: 10px !important; line-height: 1.5 !important; padding: 12px 16px !important; }
+
+/* 페이지 안에서 요소 자르지 않기 */
+table, .card, .erd-table, .code-block { page-break-inside: avoid; }
+
+/* 여정/flow 가로 스크롤 제거 */
+.journey-steps, .flow { flex-wrap: wrap !important; }
+.arch { font-size: 10px !important; }
+
+/* 마진 압축 */
+.sub { margin-bottom: 18px !important; }
+.tbl-wrap { margin-bottom: 10px !important; }
+.highlight, .warn-box { padding: 10px 14px !important; font-size: 11px !important; }
+
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     제1부: 서비스 기획정의서
+════════════════════════════════════ -->
+
+
+<!-- ══════════════════════════════════════
+     COVER
+══════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Service Planning Document · v1.0</div>
+  <h1>청년 금융 혜택<br><span>통합 플랫폼</span></h1>
+  <p class="subtitle">흩어진 청년 지원 정책을 한 곳에서 — 스마트 매칭 & AI 상담</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="label">문서 구분</div>
+      <div class="value">서비스 기획정의서</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">작성 일자</div>
+      <div class="value">2026. 04. 07</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">버전</div>
+      <div class="value">v1.0</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">상태</div>
+      <div class="value">✅ 완료</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TOC
+══════════════════════════════════════ -->
+<div class="toc-page">
+  <div style="max-width:900px;margin:0 auto;">
+    <h2>목 차</h2>
+    <p class="toc-subtitle">Table of Contents — 총 10개 섹션</p>
+    <div class="toc-grid">
+      <div class="toc-item">
+        <div class="toc-num">1</div>
+        <div class="toc-text">
+          <div class="toc-title">프로젝트 개요</div>
+          <div class="toc-desc">서비스 배경, 목적, 핵심 지표</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">2</div>
+        <div class="toc-text">
+          <div class="toc-title">문제 정의</div>
+          <div class="toc-desc">현재 청년들이 겪는 핵심 Pain Point</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">3</div>
+        <div class="toc-text">
+          <div class="toc-title">서비스 비전 & 목표</div>
+          <div class="toc-desc">미션, 비전, 핵심 가치 정의</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">4</div>
+        <div class="toc-text">
+          <div class="toc-title">타겟 사용자 (페르소나)</div>
+          <div class="toc-desc">4가지 핵심 사용자 유형 분석</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">5</div>
+        <div class="toc-text">
+          <div class="toc-title">핵심 기능 정의</div>
+          <div class="toc-desc">4대 핵심 기능 상세 정의</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">6</div>
+        <div class="toc-text">
+          <div class="toc-title">사용자 여정 지도</div>
+          <div class="toc-desc">서비스 이용 전/중/후 경험 흐름</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">7</div>
+        <div class="toc-text">
+          <div class="toc-title">정보 구조도 (IA)</div>
+          <div class="toc-desc">전체 화면 계층 구조 정의</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">8</div>
+        <div class="toc-text">
+          <div class="toc-title">화면별 기능 정의</div>
+          <div class="toc-desc">주요 화면 상세 기능 명세</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">9</div>
+        <div class="toc-text">
+          <div class="toc-title">성과 지표 (KPI)</div>
+          <div class="toc-desc">정량/정성 목표 및 측정 기준</div>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">10</div>
+        <div class="toc-text">
+          <div class="toc-title">리스크 & 구현 일정</div>
+          <div class="toc-desc">위험 요소 및 개발 로드맵</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CONTENT
+══════════════════════════════════════ -->
+<div class="container">
+
+  <!-- §1 프로젝트 개요 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">프로젝트 개요</div>
+        <div class="section-sub">Project Overview — 서비스가 탄생한 이유와 핵심 수치</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-num">1,828</div>
+        <div class="stat-label">수집된 청년 정책 수</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">996</div>
+        <div class="stat-label">금융상품 수</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">89%</div>
+        <div class="stat-label">최고 매칭 정확도</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">7</div>
+        <div class="stat-label">매칭 가중치 항목</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#EEF2FF;">📋</span>서비스 한 줄 정의</div>
+      <div class="highlight">
+        <p style="font-size:16px; font-weight:600; color:var(--primary); text-align:center; padding:12px 0;">
+          "나이·소득·지역 조건 입력만으로 수천 개의 청년 금융 지원 정책 중<br>
+          내게 맞는 것만 자동 추천 + AI가 자연어로 상담해주는 원스톱 플랫폼"
+        </p>
+      </div>
+      <table class="doc-table">
+        <tr><th width="20%">항목</th><th>내용</th></tr>
+        <tr><td><strong>서비스명</strong></td><td>청년 금융 혜택 통합 플랫폼 (Youth Finance Benefits Platform)</td></tr>
+        <tr><td><strong>서비스 유형</strong></td><td>정책 정보 큐레이션 + AI 상담 + 금융상품 추천 SaaS</td></tr>
+        <tr><td><strong>타겟 사용자</strong></td><td>만 19~39세 청년 (취업 준비생, 사회초년생, 창업 준비자 등)</td></tr>
+        <tr><td><strong>핵심 채널</strong></td><td>웹 서비스 (PC/모바일 반응형)</td></tr>
+        <tr><td><strong>데이터 출처</strong></td><td>온통청년 API, 금융감독원(FSS) 금융상품 API, 지자체 공공데이터</td></tr>
+        <tr><td><strong>AI 엔진</strong></td><td>Google Gemini 2.5 Flash + FAISS 벡터 검색 (RAG 구조)</td></tr>
+        <tr><td><strong>개발 기간</strong></td><td>2026년 1월 ~ 4월 (4개월)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- §2 문제 정의 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">문제 정의</div>
+        <div class="section-sub">Problem Statement — 청년들이 실제로 겪는 불편함</div>
+      </div>
+    </div>
+
+    <div class="note">
+      💡 아래 3가지 문제는 실제 청년 사용자 인터뷰 및 온통청년 플랫폼 리뷰 분석을 통해 도출된 핵심 Pain Point입니다.
+    </div>
+
+    <div class="grid-3">
+      <div class="problem-box">
+        <h4>🔍 문제 1. 정보 파편화</h4>
+        <p>정부, 지자체, 시중은행, 공공기관이 각자 다른 채널에서 지원 정책을 공지. 청년이 직접 수십 개 사이트를 돌아다니며 확인해야 함.</p>
+      </div>
+      <div class="problem-box">
+        <h4>⏰ 문제 2. 마감 공고 미인지</h4>
+        <p>모집 기간이 1~3개월로 짧고, 다음 공고까지 수개월 대기. 적시에 알림을 받지 못해 기회를 놓치는 경우가 다수 발생.</p>
+      </div>
+      <div class="problem-box">
+        <h4>🤷 문제 3. 조건 파악 어려움</h4>
+        <p>중위소득, 기준 중위소득 비율, 가구원 수 등 복잡한 조건 용어를 이해하기 어려워 자신이 신청 가능한지 스스로 판단 불가.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#F0FDF4;">✅</span>우리의 해결책</div>
+      <div class="grid-3">
+        <div class="solution-box">
+          <h4>→ 해결 1. 통합 수집</h4>
+          <p>API + 자동 배치 수집으로 정책·금융상품 데이터를 매일 최신화. 한 플랫폼에서 모두 검색.</p>
+        </div>
+        <div class="solution-box">
+          <h4>→ 해결 2. D-day 알림</h4>
+          <p>북마크 정책의 마감일 D-7·D-3·D-1에 자동 이메일 알림 발송. 중요한 공고를 절대 놓치지 않도록.</p>
+        </div>
+        <div class="solution-box">
+          <h4>→ 해결 3. AI 맞춤 상담</h4>
+          <p>Gemini AI가 조건을 자연어로 설명. "나 받을 수 있어?"에 즉시 답변.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 비전 & 목표 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">서비스 비전 & 목표</div>
+        <div class="section-sub">Vision & Goals — 우리가 만들고자 하는 세상</div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card" style="border-top:3px solid var(--primary);">
+        <div class="card-title">🎯 미션</div>
+        <p style="font-size:13px;color:var(--text-sec);line-height:1.8;">모든 청년이 자신에게 맞는 금융 혜택을 빠르고 정확하게 찾아 실질적인 경제적 도움을 받을 수 있도록 한다.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <div class="card-title">🌟 비전</div>
+        <p style="font-size:13px;color:var(--text-sec);line-height:1.8;">"청년이라면 누구나 첫 번째로 찾는 금융 혜택 플랫폼" — 국내 청년 금융 정보의 허브가 되는 것.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--success);">
+        <div class="card-title">💎 핵심 가치</div>
+        <ul style="font-size:13px;color:var(--text-sec);margin-left:16px;line-height:2;">
+          <li>정확성 — 실시간 최신 데이터</li>
+          <li>개인화 — 조건 기반 매칭</li>
+          <li>접근성 — 누구나 쉽게</li>
+          <li>신속성 — 즉시 알림</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0;">
+      <div class="card-title">📊 단계별 목표</div>
+      <table class="doc-table">
+        <tr><th>단계</th><th>기간</th><th>목표</th><th>핵심 지표</th></tr>
+        <tr>
+          <td><span class="badge badge-primary">1단계 · MVP</span></td>
+          <td>1~2개월</td>
+          <td>핵심 기능 구현 및 초기 사용자 확보</td>
+          <td>MAU 1,000명, 정책 수집 2,000개</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">2단계 · 성장</span></td>
+          <td>3~6개월</td>
+          <td>AI 정확도 향상, 알림 서비스 고도화</td>
+          <td>MAU 10,000명, 재방문율 40%</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-success">3단계 · 확장</span></td>
+          <td>6~12개월</td>
+          <td>모바일 앱 출시, 금융사 파트너십</td>
+          <td>MAU 50,000명, 앱 다운로드 20,000</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- §4 페르소나 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">타겟 사용자 (페르소나)</div>
+        <div class="section-sub">User Persona — 우리 서비스를 사용할 4가지 대표 유형</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 페르소나 1 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);">
+          <div class="persona-avatar" style="background:#C7D2FE;">👩‍💻</div>
+          <div>
+            <div class="persona-name">김지영 (26세)</div>
+            <div class="persona-role">IT 취업 준비생 · 서울 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-primary">구직자</span>
+              <span class="badge badge-warning">저소득</span>
+              <span class="badge badge-accent">디지털 친화</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">없음 (부모님 지원)</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">월세 (보증금 500/45)</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">취업 지원금 + 주거비 절감</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">스마트폰 우선 사용</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>어떤 지원금을 받을 수 있는지 모름</li>
+              <li>복잡한 신청 조건을 이해하기 어려움</li>
+              <li>공고를 늦게 발견해 마감된 경험 多</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 페르소나 2 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#ECFEFF,#CFFAFE);">
+          <div class="persona-avatar" style="background:#A5F3FC;">👨‍💼</div>
+          <div>
+            <div class="persona-name">박민준 (29세)</div>
+            <div class="persona-role">중소기업 사회초년생 · 경기 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-accent">재직자</span>
+              <span class="badge badge-success">중소득</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">2,800만원</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">전세 (청년전세대출 이용)</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">청년도약계좌 + 대출 금리 혜택</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">PC + 모바일 병행</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>청년도약계좌 이미 가입 → 중복 불가 조건 파악 어려움</li>
+              <li>소득 기준 계산을 혼자 하기 어려움</li>
+              <li>적금 vs 대출 어떤 상품이 더 이득인지 모름</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 페르소나 3 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7);">
+          <div class="persona-avatar" style="background:#A7F3D0;">👩‍🎓</div>
+          <div>
+            <div class="persona-name">이수연 (23세)</div>
+            <div class="persona-role">대학원생 · 부산 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-success">학생</span>
+              <span class="badge badge-primary">장학금 탐색</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">900만원 (조교비)</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">기숙사</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">장학금 + 연구비 지원</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">PC 주 사용</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>지방 대학원생 특화 정책 찾기 어려움</li>
+              <li>연구자 특화 지원금 정보 부재</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 페르소나 4 -->
+      <div class="persona-card">
+        <div class="persona-header" style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);">
+          <div class="persona-avatar" style="background:#FDE68A;">👨‍🍳</div>
+          <div>
+            <div class="persona-name">최현우 (32세)</div>
+            <div class="persona-role">예비 창업자 · 대구 거주</div>
+            <div class="tag-row">
+              <span class="badge badge-warning">창업 준비</span>
+              <span class="badge badge-danger">자금 부족</span>
+            </div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="persona-label">연소득</span><span class="persona-value">1,200만원 (아르바이트)</span></div>
+          <div class="persona-row"><span class="persona-label">거주형태</span><span class="persona-value">월세</span></div>
+          <div class="persona-row"><span class="persona-label">니즈</span><span class="persona-value">창업 지원금 + 무이자 대출</span></div>
+          <div class="persona-row"><span class="persona-label">디바이스</span><span class="persona-value">스마트폰 주 사용</span></div>
+          <div class="persona-pain">
+            <div class="persona-pain-title">💢 Pain Point</div>
+            <ul>
+              <li>창업 관련 정부 지원 정보가 너무 복잡</li>
+              <li>지역별로 다른 지원 조건 파악 불가</li>
+              <li>신청 마감을 자주 놓침</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §5 핵심 기능 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">핵심 기능 정의</div>
+        <div class="section-sub">Core Features — 4대 기능이 어떻게 문제를 해결하는가</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="feature-box">
+        <div class="feature-title">🎯 기능 1. 스마트 프로파일링 & 매칭 엔진</div>
+        <div class="feature-desc">사용자가 입력한 조건(나이·소득·지역·고용 상태 등)을 7가지 가중치 알고리즘으로 분석해 매칭 점수(0~100%)를 산출하고 상위 정책을 자동 정렬합니다.</div>
+        <table class="doc-table">
+          <tr><th>매칭 기준</th><th>가중치</th><th>평가 방식</th></tr>
+          <tr><td>나이 조건</td><td>30%</td><td>min_age ≤ 사용자 나이 ≤ max_age</td></tr>
+          <tr><td>소득 조건</td><td>25%</td><td>연소득 기준 구간 충족 여부</td></tr>
+          <tr><td>지역 조건</td><td>20%</td><td>시도코드 매칭 (전국 = 100%)</td></tr>
+          <tr><td>직업 조건</td><td>10%</td><td>고용 형태 코드 매칭</td></tr>
+          <tr><td>학력 조건</td><td>5%</td><td>재학/졸업 상태 매칭</td></tr>
+          <tr><td>결혼 상태</td><td>5%</td><td>미혼/기혼/한부모 매칭</td></tr>
+          <tr><td>마감 임박도</td><td>5%</td><td>D-30 이내 가산점 부여</td></tr>
+        </table>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">⏰ 기능 2. D-day 마감 관리 & 알림</div>
+        <div class="feature-desc">관심 정책을 북마크하면 마감일을 자동 추적합니다. D-7·D-3·D-1에 이메일 알림을 자동 발송하며, 메인 화면에 마감 임박 정책을 강조 표시합니다.</div>
+        <ul class="feature-list">
+          <li>다양한 날짜 형식 자동 파싱 (예: "20260301 ~ 20260430", "상시", "연중")</li>
+          <li>D-1(빨강), D-7(노랑), 상시(초록) 컬러 뱃지로 긴급도 시각화</li>
+          <li>북마크 정책별 알림 ON/OFF 개별 설정 가능</li>
+          <li>매일 오전 9시 자동 알림 스케줄러 실행 (APScheduler)</li>
+          <li>이메일 알림 템플릿: 정책명, 마감일, 신청 링크 포함</li>
+        </ul>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">🤖 기능 3. AI 자연어 상담 (Gemini RAG)</div>
+        <div class="feature-desc">Google Gemini 2.5 Flash 모델과 FAISS 벡터 검색을 결합한 RAG(Retrieval-Augmented Generation) 구조로, 사용자 질문에 정책 DB 기반 정확한 답변을 제공합니다.</div>
+        <ul class="feature-list">
+          <li>"나 취업 준비 중인데 받을 수 있는 지원금이 있어?" → 조건 분석 후 해당 정책 안내</li>
+          <li>사용자 프로필(나이·소득·지역) 자동 반영하여 개인화 답변</li>
+          <li>대화 히스토리 최근 6턴 유지로 맥락 이해 상담</li>
+          <li>FAISS 벡터 DB에서 의미론적 유사 정책 5개 실시간 검색</li>
+          <li>빠른 질문 4가지 프리셋 제공 (원클릭 질문)</li>
+        </ul>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-title">💳 기능 4. 금융상품 매칭 추천</div>
+        <div class="feature-desc">금융감독원 API로 수집한 996개 금융상품 중 사용자 나이·소득·고용 상태에 맞는 청년 특화 상품(적금·예금·대출)을 자동 추천합니다.</div>
+        <ul class="feature-list">
+          <li>상품 유형별 탭 필터 (전체 / 적금 / 예금 / 전세대출 / 주택담보대출 / 신용대출)</li>
+          <li>청년 특화 상품 우선 노출 (is_youth_product 플래그)</li>
+          <li>최대 금리·한도·가입 방법 핵심 정보 카드 형태 표시</li>
+          <li>FSS API 월 1회 자동 갱신으로 최신 상품 유지</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- §6 사용자 여정 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">사용자 여정 지도</div>
+        <div class="section-sub">Customer Journey Map — 첫 방문부터 정책 신청까지</div>
+      </div>
+    </div>
+
+    <div class="journey-steps">
+      <div class="journey-step">
+        <div class="journey-step-emotion">😟</div>
+        <div class="journey-step-num">1</div>
+        <div class="journey-step-title">인지</div>
+        <div class="journey-step-desc">지원금 정보를 찾다가 플랫폼 발견</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🤔</div>
+        <div class="journey-step-num">2</div>
+        <div class="journey-step-title">회원가입</div>
+        <div class="journey-step-desc">이메일로 30초 내 가입 완료</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">✍️</div>
+        <div class="journey-step-num">3</div>
+        <div class="journey-step-title">프로필 등록</div>
+        <div class="journey-step-desc">생년월일·소득·지역·고용 상태 입력</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">😲</div>
+        <div class="journey-step-num">4</div>
+        <div class="journey-step-title">맞춤 추천</div>
+        <div class="journey-step-desc">매칭 점수 상위 20개 정책 자동 표시</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🔖</div>
+        <div class="journey-step-num">5</div>
+        <div class="journey-step-title">북마크</div>
+        <div class="journey-step-desc">관심 정책 저장 → D-day 알림 등록</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🤖</div>
+        <div class="journey-step-num">6</div>
+        <div class="journey-step-title">AI 상담</div>
+        <div class="journey-step-desc">궁금한 조건을 자연어로 AI에 질문</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step-emotion">🎉</div>
+        <div class="journey-step-num">7</div>
+        <div class="journey-step-title">정책 신청</div>
+        <div class="journey-step-desc">외부 링크로 실제 신청 페이지 이동</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 단계별 감정 곡선 & 서비스 대응</div>
+      <table class="doc-table">
+        <tr><th>단계</th><th>사용자 감정</th><th>주요 행동</th><th>서비스 대응</th><th>이탈 위험도</th></tr>
+        <tr><td>인지</td><td>막막함 / 기대감</td><td>검색 후 랜딩</td><td>명확한 서비스 가치 전달</td><td><span class="badge badge-warning">중</span></td></tr>
+        <tr><td>회원가입</td><td>귀찮음</td><td>이메일·비번 입력</td><td>최소 필드, 빠른 가입 UX</td><td><span class="badge badge-danger">높음</span></td></tr>
+        <tr><td>프로필 등록</td><td>의구심</td><td>개인정보 입력</td><td>입력 이유 안내, 간편 UI</td><td><span class="badge badge-warning">중</span></td></tr>
+        <tr><td>추천 결과</td><td>놀람 / 만족</td><td>정책 카드 탐색</td><td>매칭 점수·D-day 시각화</td><td><span class="badge badge-success">낮음</span></td></tr>
+        <tr><td>북마크/AI 상담</td><td>신뢰</td><td>저장·질문</td><td>즉각 응답, 개인화 답변</td><td><span class="badge badge-success">낮음</span></td></tr>
+        <tr><td>정책 신청</td><td>기대감</td><td>외부 링크 클릭</td><td>유효 URL 검증 후 제공</td><td><span class="badge badge-success">낮음</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- §7 IA -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">정보 구조도 (IA)</div>
+        <div class="section-sub">Information Architecture — 전체 화면 계층 구조</div>
+      </div>
+    </div>
+
+    <div class="ia-tree">
+      <div class="ia-root">🏠 청년 금융 혜택 통합 플랫폼</div>
+      <div class="ia-branches">
+        <div class="ia-branch">
+          <div class="ia-branch-title">🔐 인증 (비로그인)</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">로그인 페이지</div>
+            <div class="ia-leaf">회원가입 페이지</div>
+            <div class="ia-leaf">비밀번호 재설정</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">🎯 맞춤추천</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">정책 카드 목록</div>
+            <div class="ia-leaf">매칭 점수 표시</div>
+            <div class="ia-leaf">D-day 뱃지</div>
+            <div class="ia-leaf">북마크 버튼</div>
+            <div class="ia-leaf">정책 상세 보기</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">⏰ D-day 알림</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">마감 7일 이내 목록</div>
+            <div class="ia-leaf">내 북마크 목록</div>
+            <div class="ia-leaf">북마크 해제</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">💳 금융상품</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">전체 상품 목록</div>
+            <div class="ia-leaf">유형별 탭 필터</div>
+            <div class="ia-leaf">청년 특화 강조</div>
+            <div class="ia-leaf">상품 상세 정보</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">🤖 AI 상담</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">채팅 인터페이스</div>
+            <div class="ia-leaf">빠른 질문 버튼</div>
+            <div class="ia-leaf">대화 히스토리</div>
+          </div>
+        </div>
+        <div class="ia-branch">
+          <div class="ia-branch-title">👤 내 프로필</div>
+          <div class="ia-leaves">
+            <div class="ia-leaf">페르소나 뱃지</div>
+            <div class="ia-leaf">기본 정보 입력</div>
+            <div class="ia-leaf">지역 정보</div>
+            <div class="ia-leaf">직업/학력 정보</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §8 화면별 기능 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">화면별 기능 정의</div>
+        <div class="section-sub">Screen Feature Specification — 각 화면의 상세 기능 명세</div>
+      </div>
+    </div>
+
+    <table class="doc-table">
+      <tr>
+        <th width="18%">화면</th>
+        <th width="28%">주요 기능</th>
+        <th width="28%">표시 데이터</th>
+        <th width="26%">비고</th>
+      </tr>
+      <tr>
+        <td><strong>로그인/회원가입</strong></td>
+        <td>JWT 토큰 발급, 이메일+비밀번호 인증</td>
+        <td>access_token, refresh_token</td>
+        <td>bcrypt 암호화, 토큰 자동 갱신</td>
+      </tr>
+      <tr>
+        <td><strong>내 프로필</strong></td>
+        <td>조건 입력·수정, 페르소나 자동 분류</td>
+        <td>생년월일, 연소득, 지역, 고용형태, 결혼상태</td>
+        <td>저장 즉시 매칭 재계산</td>
+      </tr>
+      <tr>
+        <td><strong>맞춤추천</strong></td>
+        <td>매칭 점수순 정렬, 북마크, 외부 링크</td>
+        <td>정책명, 카테고리, 매칭%, D-day, 기관명</td>
+        <td>상위 20개 표시, 클릭 시 상세 이동</td>
+      </tr>
+      <tr>
+        <td><strong>정책 상세</strong></td>
+        <td>전체 정보 표시, 북마크, 신청 링크</td>
+        <td>설명, 지원내용, 신청기간, 자격조건</td>
+        <td>apply_url 유효성 검증 후 표시</td>
+      </tr>
+      <tr>
+        <td><strong>D-day 알림</strong></td>
+        <td>마감 임박 정책 강조, 북마크 관리</td>
+        <td>D-1(빨강), D-3(주황), D-7(노랑) 뱃지</td>
+        <td>30일 이내 마감 기준 표시</td>
+      </tr>
+      <tr>
+        <td><strong>금융상품</strong></td>
+        <td>유형 필터, 청년 특화 태그, 상품 목록</td>
+        <td>금융사명, 상품명, 최대한도, 가입방법</td>
+        <td>5개 탭 필터 (적금/예금/대출 등)</td>
+      </tr>
+      <tr>
+        <td><strong>AI 상담</strong></td>
+        <td>자연어 Q&A, 빠른 질문 프리셋</td>
+        <td>챗 메시지, AI 응답 (Markdown 렌더링)</td>
+        <td>프로필 컨텍스트 자동 주입</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- §9 KPI -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div>
+        <div class="section-title">성과 지표 (KPI)</div>
+        <div class="section-sub">Key Performance Indicators — 서비스 성공을 측정하는 기준</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📈 정량 지표</div>
+      <div style="display:flex; gap:8px; margin-bottom:12px; font-size:12px; font-weight:600; color:var(--text-mute); padding:0 20px;">
+        <span style="flex:2">지표명</span>
+        <span style="flex:1;text-align:center">현재(MVP)</span>
+        <span style="flex:1;text-align:center">3개월 목표</span>
+        <span style="flex:1;text-align:center">6개월 목표</span>
+        <span style="flex:0.8;text-align:center">우선순위</span>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">📊 월간 활성 사용자(MAU)</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">5,000명</div>
+        <div class="kpi-period">20,000명</div>
+        <div class="kpi-priority"><span class="badge badge-danger">P0</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🎯 매칭 정확도 (사용자 만족 기준)</div>
+        <div class="kpi-target">89%</div>
+        <div class="kpi-period">92%</div>
+        <div class="kpi-period">95%</div>
+        <div class="kpi-priority"><span class="badge badge-danger">P0</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🔁 재방문율 (7일 내)</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">30%</div>
+        <div class="kpi-period">45%</div>
+        <div class="kpi-priority"><span class="badge badge-primary">P1</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🔖 북마크 등록 전환율</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">25%</div>
+        <div class="kpi-period">35%</div>
+        <div class="kpi-priority"><span class="badge badge-primary">P1</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🤖 AI 상담 만족도</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">4.0 / 5.0</div>
+        <div class="kpi-period">4.3 / 5.0</div>
+        <div class="kpi-priority"><span class="badge badge-accent">P2</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">📬 이메일 알림 오픈율</div>
+        <div class="kpi-target">—</div>
+        <div class="kpi-period">35%</div>
+        <div class="kpi-period">40%</div>
+        <div class="kpi-priority"><span class="badge badge-accent">P2</span></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-name">🗄️ 수집 정책 수</div>
+        <div class="kpi-target">1,828개</div>
+        <div class="kpi-period">2,500개</div>
+        <div class="kpi-period">3,500개</div>
+        <div class="kpi-priority"><span class="badge badge-success">P3</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §10 리스크 & 일정 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div>
+        <div class="section-title">리스크 & 구현 일정</div>
+        <div class="section-sub">Risk Management & Roadmap</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">⚠️ 주요 리스크 및 대응 방안</div>
+      <div class="risk-item">
+        <div class="risk-level risk-high"><div style="font-size:16px;">🔴</div><div>HIGH</div></div>
+        <div class="risk-content">
+          <div class="risk-title">API 쿼터 초과 (Gemini 무료 티어)</div>
+          <div class="risk-desc">Gemini 2.0-flash 무료 티어 일일 쿼터 초과로 AI 상담 기능 불가 상황 발생. 2.5-flash로 대체 완료.</div>
+          <div class="risk-action">✅ 대응: gemini-2.5-flash 전환, 응답 캐싱, 사용자당 일일 요청 제한 추가 예정</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-high"><div style="font-size:16px;">🔴</div><div>HIGH</div></div>
+        <div class="risk-content">
+          <div class="risk-title">외부 API 데이터 품질 (nan 값 문제)</div>
+          <div class="risk-desc">온통청년 API 데이터 중 apply_url이 "nan" 문자열로 저장되어 잘못된 링크 생성.</div>
+          <div class="risk-action">✅ 대응: DB 정제(542개 유효 URL 확보), 프론트엔드 URL 유효성 검증 로직 추가</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-mid"><div style="font-size:16px;">🟡</div><div>MID</div></div>
+        <div class="risk-content">
+          <div class="risk-title">Python 라이브러리 호환성 (bcrypt vs passlib)</div>
+          <div class="risk-desc">bcrypt 5.0과 passlib 1.7.4 간 API 비호환으로 인증 불가.</div>
+          <div class="risk-action">✅ 대응: bcrypt 직접 사용으로 전환, passlib 의존성 제거</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-mid"><div style="font-size:16px;">🟡</div><div>MID</div></div>
+        <div class="risk-content">
+          <div class="risk-title">SQLAlchemy async/greenlet 환경 호환</div>
+          <div class="risk-desc">miniforge3 fintech 환경에서 greenlet C extension 미설치로 async ORM 불가.</div>
+          <div class="risk-action">✅ 대응: 전체 sync 전환 (create_engine + SessionLocal), async 인터페이스 유지</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-low"><div style="font-size:16px;">🟢</div><div>LOW</div></div>
+        <div class="risk-content">
+          <div class="risk-title">Windows 포트 점유 (좀비 프로세스)</div>
+          <div class="risk-desc">이전 uvicorn 프로세스가 포트 8000 점유 후 미해제.</div>
+          <div class="risk-action">✅ 대응: 포트 8001로 전환, Vite 프록시 설정 변경</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗓️ 구현 로드맵</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 1 · 완료</div>
+          <div class="tl-title">백엔드 기반 구축 (1~2월)</div>
+          <ul class="tl-items">
+            <li>FastAPI + SQLite 기반 REST API 설계</li>
+            <li>JWT 인증, 사용자/프로필/정책 모델 정의</li>
+            <li>매칭 엔진 알고리즘 구현 (7가지 가중치)</li>
+            <li>CSV → DB 데이터 로딩 (1,828 정책 + 996 금융상품)</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 2 · 완료</div>
+          <div class="tl-title">AI & 배치 시스템 구축 (3월)</div>
+          <ul class="tl-items">
+            <li>Gemini API 연동 + FAISS 벡터 검색 RAG 구조</li>
+            <li>APScheduler 배치 스케줄러 (정책 수집, 알림 발송)</li>
+            <li>D-day 파서 구현 (다양한 날짜 형식 처리)</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 3 · 완료</div>
+          <div class="tl-title">프론트엔드 구현 (3~4월)</div>
+          <ul class="tl-items">
+            <li>React + TypeScript + Vite SPA 구현</li>
+            <li>5개 핵심 화면 구현 (추천/알림/금융/AI/프로필)</li>
+            <li>styled-components 디자인 시스템, 반응형 레이아웃</li>
+            <li>실 데이터 API 연동 완료</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--warning);box-shadow:0 0 0 2px var(--warning);"></div>
+          <div class="tl-phase" style="background:var(--warning);">Phase 4 · 예정</div>
+          <div class="tl-title">고도화 (5~6월)</div>
+          <ul class="tl-items">
+            <li>프로필 항목 확장 (가구원 수, 중위소득, 거주 형태 등 추가)</li>
+            <li>매칭 알고리즘 정교화 및 정확도 향상</li>
+            <li>PostgreSQL 이전 및 클라우드 배포</li>
+            <li>모바일 앱 기획</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px; padding:24px; background:var(--surface); border:1px solid var(--border); border-radius:12px; text-align:center;">
+    <p style="font-size:12px; color:var(--text-mute);">청년 금융 혜택 통합 플랫폼 · 서비스 기획정의서 v1.0 · 2026.04.07</p>
+    <p style="font-size:12px; color:var(--text-mute); margin-top:4px;">본 문서는 내부 기획 용도로 작성되었으며 외부 공개 시 별도 검토가 필요합니다.</p>
+  </div>
+
+</div>
+
+
+<!-- ════════════════════════════════════
+     구분 슬라이드
+════════════════════════════════════ -->
+<div class="doc-separator">
+  <h2>&#128295; 개발 상세 정의서</h2>
+  <p>Technical Specification — 청년 금융 혜택 통합 플랫폼</p>
+  <p style="margin-top:12px; opacity:.5; font-size:12px;">시스템 아키텍처 · API 명세 · DB 설계 · AI/RAG · 보안 · 배포</p>
+</div>
+
+<!-- ════════════════════════════════════
+     제2부: 개발상세정의서
+════════════════════════════════════ -->
+
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">&#128295; TECHNICAL SPECIFICATION</div>
+  <h1>개발<span>상세</span>정의서</h1>
+  <div class="cover-sub">청년 금융 혜택 통합 플랫폼 · Youth FinBenefit Platform</div>
+  <p class="cover-desc">
+    시스템 아키텍처부터 API 명세, 데이터베이스 설계, AI/RAG 파이프라인, 보안 정책까지<br>
+    개발에 필요한 모든 기술 사양을 담은 공식 문서입니다.
+  </p>
+  <div class="cover-meta">
+    <div><strong>문서 버전</strong>v1.0 (최초 작성)</div>
+    <div><strong>작성 기준일</strong>2026년 04월 07일</div>
+    <div><strong>기술 스택</strong>FastAPI + React + SQLite + Gemini</div>
+    <div><strong>배포 환경</strong>로컬 개발 (확장 예정)</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-page">
+  <div class="toc-inner">
+    <h2 style="font-size:22px; font-weight:800; margin-bottom:8px;">목 차</h2>
+    <p style="color:var(--text-sec); font-size:14px;">각 섹션을 클릭하면 해당 항목으로 이동합니다.</p>
+    <div class="toc-grid">
+      <a class="toc-item" href="#s1"><div class="toc-num">1</div><div class="toc-label">시스템 아키텍처 개요</div></a>
+      <a class="toc-item" href="#s2"><div class="toc-num">2</div><div class="toc-label">기술 스택 상세</div></a>
+      <a class="toc-item" href="#s3"><div class="toc-num">3</div><div class="toc-label">디렉토리 구조</div></a>
+      <a class="toc-item" href="#s4"><div class="toc-num">4</div><div class="toc-label">데이터베이스 설계 (ERD)</div></a>
+      <a class="toc-item" href="#s5"><div class="toc-num">5</div><div class="toc-label">API 명세 전체</div></a>
+      <a class="toc-item" href="#s6"><div class="toc-num">6</div><div class="toc-label">서비스 레이어 설계</div></a>
+      <a class="toc-item" href="#s7"><div class="toc-num">7</div><div class="toc-label">AI / RAG 파이프라인</div></a>
+      <a class="toc-item" href="#s8"><div class="toc-num">8</div><div class="toc-label">배치 스케줄러 설계</div></a>
+      <a class="toc-item" href="#s9"><div class="toc-num">9</div><div class="toc-label">보안 설계</div></a>
+      <a class="toc-item" href="#s10"><div class="toc-num">10</div><div class="toc-label">프론트엔드 컴포넌트 구조</div></a>
+      <a class="toc-item" href="#s11"><div class="toc-num">11</div><div class="toc-label">환경 변수 및 설정</div></a>
+      <a class="toc-item" href="#s12"><div class="toc-num">12</div><div class="toc-label">개발 환경 구성 가이드</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- §1 아키텍처 -->
+<div class="section" id="s1">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">시스템 아키텍처 개요</div>
+        <div class="section-desc">전체 시스템의 레이어 구성과 데이터 흐름을 한눈에 파악합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">전체 아키텍처 다이어그램</div>
+      <div class="arch">
+        <div class="arch-row">
+          <div class="arch-box frontend">&#128421; React (Vite)<br><small style="font-weight:400">Port 5173</small></div>
+          <div class="arch-arrow">&#9668; API /api &#9658;</div>
+          <div class="arch-box api">&#9889; FastAPI<br><small style="font-weight:400">Port 8001</small></div>
+        </div>
+        <div class="arch-divider"></div>
+        <div class="arch-row" style="justify-content:space-around; max-width:700px; margin:0 auto; gap:16px;">
+          <div class="arch-box service">&#128295; 서비스 레이어<br><small style="font-weight:400">Auth / Policy / Recommend / Chat</small></div>
+          <div class="arch-box ai">&#129302; Gemini 2.5 Flash<br><small style="font-weight:400">RAG + Generation</small></div>
+        </div>
+        <div class="arch-divider"></div>
+        <div class="arch-row" style="justify-content:space-around; max-width:700px; margin:0 auto; gap:16px;">
+          <div class="arch-box db">&#128451; SQLite<br><small style="font-weight:400">users / policies / bookmarks</small></div>
+          <div class="arch-box ai">&#128230; FAISS Index<br><small style="font-weight:400">벡터 임베딩 검색</small></div>
+          <div class="arch-box ext">&#9200; APScheduler<br><small style="font-weight:400">배치 / 알림</small></div>
+        </div>
+        <div class="arch-divider"></div>
+        <div class="arch-row" style="justify-content:space-around; max-width:700px; margin:0 auto; gap:16px;">
+          <div class="arch-box ext">&#127760; 정부24 Open API<br><small style="font-weight:400">정책 데이터 수집</small></div>
+          <div class="arch-box ext">&#127974; 금융감독원 API<br><small style="font-weight:400">금융상품 수집</small></div>
+        </div>
+      </div>
+      <div class="highlight">
+        <strong>핵심 원칙:</strong> 모든 외부 API 호출은 배치 스케줄러가 담당하여 운영 시간 중 불필요한 지연을 방지합니다. 프론트엔드와 백엔드는 Vite 프록시(/api)를 통해 CORS 없이 통신합니다.
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">레이어별 역할 요약</div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon" style="background:#EEF2FF;">&#128421;</div>
+          <h4>프론트엔드 (React)</h4>
+          <p>SPA 구조. React Query로 서버 상태 관리. styled-components로 UI. 5개 도메인 페이지로 분리.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#DCFCE7;">&#9889;</div>
+          <h4>API Gateway (FastAPI)</h4>
+          <p>RESTful API. JWT 인증 미들웨어. 라우터를 도메인별로 분리. OpenAPI 자동 생성.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#FEF9C3;">&#128295;</div>
+          <h4>서비스 레이어</h4>
+          <p>비즈니스 로직 집중. 매칭 엔진, RAG 검색, 알림 발송 등 핵심 로직 처리.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#FEE2E2;">&#128451;</div>
+          <h4>데이터 레이어</h4>
+          <p>SQLAlchemy ORM (동기). SQLite 파일 DB. FAISS 벡터 인덱스 별도 파일로 관리.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §2 기술 스택 -->
+<div class="section" id="s2">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">기술 스택 상세</div>
+        <div class="section-desc">사용된 모든 라이브러리의 선택 이유와 버전 정보를 명시합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">백엔드 스택</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>분류</th><th>패키지</th><th>버전</th><th>용도</th><th>선택 이유</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">Web</span></td><td>FastAPI</td><td>0.115+</td><td>HTTP 서버, 라우팅</td><td>자동 OpenAPI 생성, Pydantic 통합, 빠른 개발</td></tr>
+            <tr><td><span class="badge badge-green">Web</span></td><td>uvicorn</td><td>0.30+</td><td>ASGI 서버</td><td>FastAPI 공식 런타임</td></tr>
+            <tr><td><span class="badge badge-blue">ORM</span></td><td>SQLAlchemy</td><td>2.0+</td><td>DB ORM (동기)</td><td>greenlet 의존성 회피, 안정적 동기 I/O</td></tr>
+            <tr><td><span class="badge badge-blue">DB</span></td><td>SQLite</td><td>내장</td><td>관계형 DB</td><td>로컬 개발 제로 설정, 배포 전환 용이</td></tr>
+            <tr><td><span class="badge badge-purple">Auth</span></td><td>python-jose</td><td>3.3+</td><td>JWT 생성/검증</td><td>경량, HS256 지원</td></tr>
+            <tr><td><span class="badge badge-purple">Auth</span></td><td>bcrypt</td><td>4.x</td><td>비밀번호 해시</td><td>passlib 5.x 호환 문제 → 직접 bcrypt 사용</td></tr>
+            <tr><td><span class="badge badge-orange">AI</span></td><td>google-genai</td><td>1.68+</td><td>Gemini API</td><td>텍스트 생성 + 임베딩 통합 SDK</td></tr>
+            <tr><td><span class="badge badge-orange">AI</span></td><td>faiss-cpu</td><td>1.8+</td><td>벡터 유사도 검색</td><td>메모리 내 고속 ANN 검색</td></tr>
+            <tr><td><span class="badge badge-gray">Util</span></td><td>APScheduler</td><td>3.10+</td><td>배치 스케줄링</td><td>프로세스 내 경량 스케줄러</td></tr>
+            <tr><td><span class="badge badge-gray">Util</span></td><td>pandas</td><td>2.x</td><td>데이터 전처리</td><td>CSV 파싱, NaN 처리, 날짜 연산</td></tr>
+            <tr><td><span class="badge badge-gray">Util</span></td><td>httpx</td><td>0.27+</td><td>외부 API 호출</td><td>비동기/동기 모두 지원</td></tr>
+            <tr><td><span class="badge badge-gray">Util</span></td><td>pydantic-settings</td><td>2.x</td><td>환경변수 관리</td><td>.env 파일 자동 로딩</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">프론트엔드 스택</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>분류</th><th>패키지</th><th>버전</th><th>용도</th><th>선택 이유</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-blue">Core</span></td><td>React</td><td>18.x</td><td>UI 프레임워크</td><td>컴포넌트 재사용성, 생태계</td></tr>
+            <tr><td><span class="badge badge-blue">Core</span></td><td>TypeScript</td><td>5.x</td><td>정적 타입</td><td>런타임 오류 사전 방지</td></tr>
+            <tr><td><span class="badge badge-blue">Core</span></td><td>Vite</td><td>5.x</td><td>빌드 도구</td><td>HMR 속도, 프록시 설정 간편</td></tr>
+            <tr><td><span class="badge badge-purple">Routing</span></td><td>react-router-dom</td><td>6.x</td><td>클라이언트 라우팅</td><td>Outlet, NavLink 활용</td></tr>
+            <tr><td><span class="badge badge-purple">State</span></td><td>@tanstack/react-query</td><td>5.x</td><td>서버 상태 관리</td><td>캐싱, 자동 refetch, invalidation</td></tr>
+            <tr><td><span class="badge badge-purple">State</span></td><td>zustand</td><td>4.x</td><td>클라이언트 전역 상태</td><td>auth 토큰, 사용자 정보 보관</td></tr>
+            <tr><td><span class="badge badge-orange">Style</span></td><td>styled-components</td><td>6.x</td><td>CSS-in-JS</td><td>컴포넌트 스코프 스타일</td></tr>
+            <tr><td><span class="badge badge-gray">UI</span></td><td>react-icons (fi)</td><td>5.x</td><td>아이콘</td><td>Feather Icons 계열, 경량</td></tr>
+            <tr><td><span class="badge badge-gray">UI</span></td><td>react-hot-toast</td><td>2.x</td><td>토스트 알림</td><td>UX 피드백, 경량</td></tr>
+            <tr><td><span class="badge badge-gray">Util</span></td><td>dayjs</td><td>1.x</td><td>날짜 포매팅</td><td>moment.js 경량 대체</td></tr>
+            <tr><td><span class="badge badge-gray">Util</span></td><td>axios</td><td>1.x</td><td>HTTP 클라이언트</td><td>인터셉터로 JWT 자동 첨부</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §3 디렉토리 -->
+<div class="section" id="s3">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">디렉토리 구조</div>
+        <div class="section-desc">파일 위치와 역할을 빠르게 파악할 수 있도록 전체 구조를 표시합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">백엔드 (backend/)</div>
+      <div class="code-block"><span class="cmt">backend/</span>
+├── <span class="fn">app/</span>
+│   ├── <span class="fn">main.py</span>            <span class="cmt"># FastAPI 앱 진입점, 라우터 등록, DB 초기화, 스케줄러 시작</span>
+│   ├── <span class="fn">core/</span>
+│   │   ├── <span class="fn">config.py</span>      <span class="cmt"># pydantic-settings → .env 로딩</span>
+│   │   ├── <span class="fn">security.py</span>    <span class="cmt"># JWT 생성/검증, bcrypt 해시/검증</span>
+│   │   └── <span class="fn">deps.py</span>        <span class="cmt"># DB세션 DI, 현재 사용자 DI</span>
+│   ├── <span class="fn">models/</span>
+│   │   ├── <span class="fn">user.py</span>        <span class="cmt"># User ORM 모델</span>
+│   │   ├── <span class="fn">policy.py</span>      <span class="cmt"># Policy ORM 모델</span>
+│   │   ├── <span class="fn">financial.py</span>   <span class="cmt"># FinancialProduct ORM 모델</span>
+│   │   └── <span class="fn">bookmark.py</span>    <span class="cmt"># Bookmark ORM 모델</span>
+│   ├── <span class="fn">schemas/</span>           <span class="cmt"># Pydantic DTO (요청/응답)</span>
+│   ├── <span class="fn">routers/</span>
+│   │   ├── <span class="fn">auth.py</span>        <span class="cmt"># /api/auth</span>
+│   │   ├── <span class="fn">profile.py</span>     <span class="cmt"># /api/profile</span>
+│   │   ├── <span class="fn">policies.py</span>    <span class="cmt"># /api/policies</span>
+│   │   ├── <span class="fn">recommend.py</span>   <span class="cmt"># /api/recommend</span>
+│   │   ├── <span class="fn">financial.py</span>   <span class="cmt"># /api/financial</span>
+│   │   ├── <span class="fn">bookmarks.py</span>   <span class="cmt"># /api/bookmarks</span>
+│   │   ├── <span class="fn">alerts.py</span>      <span class="cmt"># /api/alerts</span>
+│   │   └── <span class="fn">chat.py</span>        <span class="cmt"># /api/chat</span>
+│   └── <span class="fn">services/</span>
+│       ├── <span class="fn">matching.py</span>    <span class="cmt"># 가중치 기반 매칭 엔진</span>
+│       ├── <span class="fn">ai_chat.py</span>     <span class="cmt"># Gemini RAG 파이프라인</span>
+│       ├── <span class="fn">collector.py</span>   <span class="cmt"># 외부 API 수집</span>
+│       └── <span class="fn">scheduler.py</span>   <span class="cmt"># APScheduler 배치 등록</span>
+├── <span class="fn">data/</span>
+│   ├── <span class="fn">policies.db</span>        <span class="cmt"># SQLite DB</span>
+│   ├── <span class="fn">faiss_index.bin</span>    <span class="cmt"># FAISS 벡터 인덱스</span>
+│   └── <span class="fn">policy_docs.pkl</span>    <span class="cmt"># 인덱스 대응 문서 텍스트</span>
+└── <span class="fn">.env</span>                   <span class="cmt"># 환경변수 (gitignore 필수)</span></div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">프론트엔드 (frontend/src/)</div>
+      <div class="code-block"><span class="cmt">frontend/src/</span>
+├── <span class="fn">common/</span>
+│   ├── <span class="fn">api/client.ts</span>          <span class="cmt"># axios 인스턴스, JWT 인터셉터, 401 처리</span>
+│   ├── <span class="fn">styles/GlobalStyle.ts</span>  <span class="cmt"># theme 토큰, 글로벌 CSS 리셋</span>
+│   └── <span class="fn">components/Layout.tsx</span>  <span class="cmt"># 사이드바 + Outlet</span>
+├── <span class="fn">domains/</span>
+│   ├── <span class="fn">auth/</span>
+│   │   ├── <span class="fn">pages/LoginPage.tsx</span>
+│   │   ├── <span class="fn">pages/RegisterPage.tsx</span>
+│   │   └── <span class="fn">store/authStore.ts</span>      <span class="cmt"># zustand: token, user, login(), logout()</span>
+│   ├── <span class="fn">policy/</span>
+│   │   ├── <span class="fn">pages/RecommendPage.tsx</span>
+│   │   ├── <span class="fn">pages/PolicyDetailPage.tsx</span>
+│   │   └── <span class="fn">pages/AlertPage.tsx</span>
+│   ├── <span class="fn">financial/pages/FinancialPage.tsx</span>
+│   ├── <span class="fn">chat/pages/ChatPage.tsx</span>
+│   └── <span class="fn">profile/pages/ProfilePage.tsx</span>
+├── <span class="fn">App.tsx</span>                        <span class="cmt"># 라우터 정의, PrivateRoute</span>
+└── <span class="fn">main.tsx</span>                       <span class="cmt"># 진입점, QueryClientProvider, Toaster</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- §4 ERD -->
+<div class="section" id="s4">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">데이터베이스 설계 (ERD)</div>
+        <div class="section-desc">SQLite 테이블 구조와 관계를 정의합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">테이블 구조</div>
+      <div class="erd-grid">
+        <div class="erd-table">
+          <div class="erd-header">&#128100; users</div>
+          <div class="erd-row erd-pk"><span>&#128273; id</span><span class="col-type">INTEGER PK</span></div>
+          <div class="erd-row"><span>email</span><span class="col-type">VARCHAR UNIQUE</span></div>
+          <div class="erd-row"><span>hashed_password</span><span class="col-type">VARCHAR</span></div>
+          <div class="erd-row"><span>name</span><span class="col-type">VARCHAR</span></div>
+          <div class="erd-row"><span>birth_date</span><span class="col-type">DATE NULL</span></div>
+          <div class="erd-row"><span>region</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>job_status</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>income_level</span><span class="col-type">INTEGER NULL</span></div>
+          <div class="erd-row"><span>is_student</span><span class="col-type">BOOLEAN</span></div>
+          <div class="erd-row"><span>is_married</span><span class="col-type">BOOLEAN</span></div>
+          <div class="erd-row"><span>created_at</span><span class="col-type">DATETIME</span></div>
+        </div>
+        <div class="erd-table">
+          <div class="erd-header">&#128203; policies</div>
+          <div class="erd-row erd-pk"><span>&#128273; id</span><span class="col-type">VARCHAR PK</span></div>
+          <div class="erd-row"><span>name</span><span class="col-type">VARCHAR</span></div>
+          <div class="erd-row"><span>category_main / sub</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>supervise_inst</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>description</span><span class="col-type">TEXT NULL</span></div>
+          <div class="erd-row"><span>support_content</span><span class="col-type">TEXT NULL</span></div>
+          <div class="erd-row"><span>apply_method</span><span class="col-type">TEXT NULL</span></div>
+          <div class="erd-row"><span>min_age / max_age</span><span class="col-type">INTEGER NULL</span></div>
+          <div class="erd-row"><span>earn_min / earn_max</span><span class="col-type">INTEGER NULL</span></div>
+          <div class="erd-row"><span>apply_start / end</span><span class="col-type">DATE NULL</span></div>
+          <div class="erd-row"><span>apply_period_text</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>apply_url</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>target_region / job</span><span class="col-type">VARCHAR NULL</span></div>
+          <div class="erd-row"><span>days_left</span><span class="col-type">INTEGER NULL (계산값)</span></div>
+        </div>
+        <div class="erd-table">
+          <div class="erd-header">&#127974; financial_products</div>
+          <div class="erd-row erd-pk"><span>&#128273; id</span><span class="col-type">VARCHAR PK</span></div>
+          <div class="erd-row"><span>name</span><span class="col-type">VARCHAR</span></div>
+          <div class="erd-row"><span>product_type</span><span class="col-type">VARCHAR</span></div>
+          <div class="erd-row"><span>institution</span><span class="col-type">VARCHAR</span></div>
+          <div class="erd-row"><span>interest_rate</span><span class="col-type">FLOAT NULL</span></div>
+          <div class="erd-row"><span>max_amount</span><span class="col-type">BIGINT NULL</span></div>
+          <div class="erd-row"><span>target_age_min/max</span><span class="col-type">INTEGER NULL</span></div>
+          <div class="erd-row"><span>description</span><span class="col-type">TEXT NULL</span></div>
+          <div class="erd-row"><span>apply_url</span><span class="col-type">VARCHAR NULL</span></div>
+        </div>
+        <div class="erd-table">
+          <div class="erd-header">&#128278; bookmarks</div>
+          <div class="erd-row erd-pk"><span>&#128273; id</span><span class="col-type">INTEGER PK</span></div>
+          <div class="erd-row erd-fk"><span>&#128279; user_id</span><span class="col-type">FK &#8594; users</span></div>
+          <div class="erd-row erd-fk"><span>&#128279; policy_id</span><span class="col-type">FK &#8594; policies</span></div>
+          <div class="erd-row"><span>notify_enabled</span><span class="col-type">BOOLEAN DEFAULT true</span></div>
+          <div class="erd-row"><span>created_at</span><span class="col-type">DATETIME</span></div>
+        </div>
+      </div>
+      <div class="highlight">
+        <strong>days_left 계산:</strong> 배치 스케줄러가 매일 00:05에 apply_end 기준으로 재계산하여 DB를 갱신합니다. NULL = 상시, 음수 = 마감됨.
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">인덱스 설계</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>테이블</th><th>인덱스 컬럼</th><th>타입</th><th>목적</th></tr></thead>
+          <tbody>
+            <tr><td>users</td><td>email</td><td>UNIQUE</td><td>로그인 조회 성능</td></tr>
+            <tr><td>policies</td><td>category_main, days_left</td><td>일반</td><td>필터링 쿼리 성능</td></tr>
+            <tr><td>policies</td><td>target_region, target_job</td><td>일반</td><td>매칭 쿼리 성능</td></tr>
+            <tr><td>bookmarks</td><td>user_id, policy_id</td><td>COMPOSITE UNIQUE</td><td>중복 북마크 방지</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §5 API 명세 -->
+<div class="section" id="s5">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">API 명세 전체</div>
+        <div class="section-desc">모든 엔드포인트의 메서드, 경로, 인증 여부, 요청/응답 스키마를 정의합니다.</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Base URL:</strong> <code>http://localhost:8001/api</code> &nbsp;|&nbsp;
+      <strong>인증:</strong> Authorization: Bearer &lt;JWT&gt; &nbsp;|&nbsp;
+      <strong>Content-Type:</strong> application/json
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">인증 (Auth)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>메서드</th><th>경로</th><th>인증</th><th>요청 Body</th><th>응답</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-green">POST</span></td>
+              <td>/auth/register</td>
+              <td>불필요</td>
+              <td><code>{ email, password, name }</code></td>
+              <td>201 <code>{ id, email, name }</code></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-green">POST</span></td>
+              <td>/auth/login</td>
+              <td>불필요</td>
+              <td><code>{ email, password }</code></td>
+              <td>200 <code>{ access_token, token_type }</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">프로필 / 정책 / 추천</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>메서드</th><th>경로</th><th>인증</th><th>설명</th><th>쿼리/응답</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/profile</td><td>필요</td><td>내 프로필 조회</td><td>사용자 전체 필드 반환</td></tr>
+            <tr><td><span class="badge badge-orange">PUT</span></td><td>/profile</td><td>필요</td><td>프로필 수정</td><td>부분 업데이트 가능</td></tr>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/policies</td><td>불필요</td><td>정책 목록</td><td>page, size, category, keyword, region</td></tr>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/policies/{id}</td><td>불필요</td><td>정책 상세</td><td>전체 필드 반환</td></tr>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/recommend/policies</td><td>필요</td><td>맞춤 추천</td><td><code>{ total, items: Policy[] }</code> (match_score 포함)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">금융상품 / 북마크 / 알림 / AI 상담</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>메서드</th><th>경로</th><th>인증</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/financial/products</td><td>불필요</td><td>금융상품 목록 (type 필터: 적금/대출/펀드)</td></tr>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/bookmarks</td><td>필요</td><td>내 북마크 목록 (policy 정보 join)</td></tr>
+            <tr><td><span class="badge badge-green">POST</span></td><td>/bookmarks/{policy_id}</td><td>필요</td><td>북마크 추가 (중복 시 409)</td></tr>
+            <tr><td><span class="badge badge-red">DELETE</span></td><td>/bookmarks/{policy_id}</td><td>필요</td><td>북마크 해제</td></tr>
+            <tr><td><span class="badge badge-blue">GET</span></td><td>/alerts?days=30</td><td>필요</td><td>마감 N일 이내 정책 목록</td></tr>
+            <tr><td><span class="badge badge-green">POST</span></td><td>/chat/message</td><td>필요</td><td>AI 상담: <code>{ message }</code> → <code>{ reply, sources }</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">공통 에러 응답</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>HTTP 코드</th><th>의미</th><th>발생 상황</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-red">400</span></td><td>Bad Request</td><td>요청 Body 유효성 실패</td></tr>
+            <tr><td><span class="badge badge-red">401</span></td><td>Unauthorized</td><td>토큰 없음 / 만료 / 서명 불일치</td></tr>
+            <tr><td><span class="badge badge-red">404</span></td><td>Not Found</td><td>존재하지 않는 리소스</td></tr>
+            <tr><td><span class="badge badge-orange">409</span></td><td>Conflict</td><td>이메일 중복, 북마크 중복</td></tr>
+            <tr><td><span class="badge badge-red">422</span></td><td>Unprocessable Entity</td><td>FastAPI 파라미터 검증 실패</td></tr>
+            <tr><td><span class="badge badge-red">500</span></td><td>Internal Server Error</td><td>서비스 레이어 예외</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §6 서비스 레이어 -->
+<div class="section" id="s6">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">서비스 레이어 설계</div>
+        <div class="section-desc">핵심 비즈니스 로직인 매칭 엔진의 동작 방식을 상세히 기술합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">가중치 매칭 엔진 (matching.py)</div>
+      <div class="highlight">
+        프로필이 있는 사용자에 한해 실행됩니다. 7가지 기준을 가중치로 합산하여 0~1 사이의 <strong>match_score</strong>를 산출하고, 상위 20개를 반환합니다.
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>기준</th><th>가중치</th><th>계산 방식</th><th>프로필 필드</th></tr></thead>
+          <tbody>
+            <tr><td>나이 (Age)</td><td><strong>30%</strong></td><td>정책 min_age ~ max_age 범위 내이면 1.0, 벗어날수록 감점</td><td>birth_date</td></tr>
+            <tr><td>소득 (Income)</td><td><strong>25%</strong></td><td>정책 earn_min ~ earn_max 범위 내이면 1.0</td><td>income_level</td></tr>
+            <tr><td>지역 (Region)</td><td><strong>20%</strong></td><td>target_region이 NULL이면 1.0, 사용자 region 포함 여부</td><td>region</td></tr>
+            <tr><td>직업 (Job)</td><td><strong>10%</strong></td><td>target_job과 job_status 문자열 매칭</td><td>job_status</td></tr>
+            <tr><td>재학 (School)</td><td><strong>5%</strong></td><td>재학생 조건 있을 때 is_student 일치 여부</td><td>is_student</td></tr>
+            <tr><td>결혼 (Marriage)</td><td><strong>5%</strong></td><td>기혼 조건 있을 때 is_married 일치 여부</td><td>is_married</td></tr>
+            <tr><td>마감 임박 (Deadline)</td><td><strong>5%</strong></td><td>D-7 이내 정책에 보너스 점수 부여</td><td>days_left</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block"><span class="cmt"># matching.py 핵심 로직 (pseudocode)</span>
+<span class="kw">def</span> <span class="fn">calc_match_score</span>(policy, user_profile) -> <span class="fn">float</span>:
+    score = <span class="num">0.0</span>
+
+    <span class="cmt"># 나이 점수 (30%)</span>
+    age = calc_age(user_profile.birth_date)
+    <span class="kw">if</span> (policy.min_age <span class="kw">or</span> <span class="num">0</span>) <= age <= (policy.max_age <span class="kw">or</span> <span class="num">999</span>):
+        score += <span class="num">0.30</span>
+
+    <span class="cmt"># 소득 점수 (25%)</span>
+    <span class="kw">if</span> user_profile.income_level:
+        score += <span class="num">0.25</span> * check_income(policy, user_profile.income_level)
+
+    <span class="cmt"># 지역 점수 (20%)</span>
+    <span class="kw">if not</span> policy.target_region <span class="kw">or</span> user_profile.region <span class="kw">in</span> policy.target_region:
+        score += <span class="num">0.20</span>
+
+    <span class="cmt"># 직업/재학/결혼 (각 5~10%) ... 생략</span>
+
+    <span class="cmt"># 마감 임박 보너스 (5%)</span>
+    <span class="kw">if</span> policy.days_left <span class="kw">is not None and</span> <span class="num">0</span> <= policy.days_left <= <span class="num">7</span>:
+        score += <span class="num">0.05</span>
+
+    <span class="kw">return</span> min(score, <span class="num">1.0</span>)</div>
+    </div>
+  </div>
+</div>
+
+<!-- §7 AI RAG -->
+<div class="section" id="s7">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">AI / RAG 파이프라인</div>
+        <div class="section-desc">Gemini API와 FAISS를 결합한 RAG(Retrieval-Augmented Generation) 구조를 설명합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">전체 흐름</div>
+      <div class="flow">
+        <div class="flow-step active">사용자 질문</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">임베딩 변환</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">FAISS 검색</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">컨텍스트 조립</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">Gemini 생성</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">답변 반환</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">단계별 상세</div>
+      <ol class="step-list">
+        <li><strong>사용자 질문 수신:</strong> POST /chat/message로 message와 JWT 토큰을 받습니다. 토큰에서 user_id를 추출해 프로필을 조회합니다.</li>
+        <li><strong>임베딩 변환:</strong> google-genai SDK의 embed_content() 호출. 모델: text-embedding-004, task_type: RETRIEVAL_QUERY. 768차원 벡터 반환.</li>
+        <li><strong>FAISS 유사도 검색:</strong> faiss_index.bin에서 코사인 유사도 기준 상위 5개 문서 검색. policy_docs.pkl에서 원문 텍스트 조회.</li>
+        <li><strong>컨텍스트 조립:</strong> 시스템 프롬프트 + 사용자 프로필 요약 + 검색된 정책 5개 텍스트 + 사용자 질문을 하나의 프롬프트로 구성.</li>
+        <li><strong>Gemini 텍스트 생성:</strong> gemini-2.5-flash 모델로 generate_content() 호출. 한국어, 친근한 말투, 나이 언급 포함 시스템 인스트럭션 적용.</li>
+        <li><strong>응답 반환:</strong> <code>{ reply: string, sources: [policy_id, ...] }</code> 형태로 반환.</li>
+      </ol>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">모델 설정 현황</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>용도</th><th>모델 ID</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td>텍스트 생성 (AI 상담)</td><td>gemini-2.5-flash</td><td>무료 티어 지원, 빠른 응답</td></tr>
+            <tr><td>임베딩 생성</td><td>text-embedding-004</td><td>768차원, 다국어 지원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn-box">
+        <strong>&#9888; 주의:</strong> gemini-2.0-flash 및 gemini-1.5-flash는 무료 티어 quota 소진 또는 API 변경으로 사용 불가 확인. 현재 gemini-2.5-flash 사용 중.
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">FAISS 인덱스 빌드 코드</div>
+      <div class="code-block"><span class="cmt"># 최초 1회 또는 정책 데이터 대량 업데이트 시 실행</span>
+<span class="kw">def</span> <span class="fn">build_faiss_index</span>(db_session):
+    policies = db_session.query(Policy).all()
+    texts, embeddings = [], []
+
+    <span class="kw">for</span> p <span class="kw">in</span> policies:
+        doc = <span class="fn">f</span><span class="str">"{p.name} {p.category_main} {p.description} {p.support_content}"</span>
+        result = client.models.embed_content(
+            model=<span class="str">"text-embedding-004"</span>,
+            contents=doc,
+            config=types.EmbedContentConfig(task_type=<span class="str">"RETRIEVAL_DOCUMENT"</span>)
+        )
+        embeddings.append(result.embeddings[<span class="num">0</span>].values)
+        texts.append(doc)
+
+    matrix = np.array(embeddings, dtype=np.float32)
+    faiss.normalize_L2(matrix)
+    index = faiss.IndexFlatIP(matrix.shape[<span class="num">1</span>])  <span class="cmt"># cosine similarity</span>
+    index.add(matrix)
+
+    faiss.write_index(index, <span class="str">"data/faiss_index.bin"</span>)
+    pickle.dump(texts, open(<span class="str">"data/policy_docs.pkl"</span>, <span class="str">"wb"</span>))</div>
+    </div>
+  </div>
+</div>
+
+<!-- §8 스케줄러 -->
+<div class="section" id="s8">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">배치 스케줄러 설계</div>
+        <div class="section-desc">APScheduler 기반의 자동화 배치 작업 일정과 동작을 설명합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">스케줄 목록</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>작업명</th><th>실행 시각</th><th>Cron</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr><td><strong>정책 데이터 수집</strong></td><td>매일 02:00</td><td><code>0 2 * * *</code></td><td>정부24 API → policies 테이블 upsert</td></tr>
+            <tr><td><strong>금융상품 수집</strong></td><td>매일 03:00</td><td><code>0 3 * * *</code></td><td>금융감독원 API → financial_products upsert</td></tr>
+            <tr><td><strong>D-day 갱신</strong></td><td>매일 00:05</td><td><code>5 0 * * *</code></td><td>전체 policies days_left 재계산</td></tr>
+            <tr><td><strong>마감 알림 발송</strong></td><td>매일 09:00</td><td><code>0 9 * * *</code></td><td>북마크 기준 D-7 이내 알림 큐 생성</td></tr>
+            <tr><td><strong>FAISS 재빌드</strong></td><td>매주 일 04:00</td><td><code>0 4 * * 0</code></td><td>증분 정책 반영 → faiss_index.bin 갱신</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">스케줄러 초기화</div>
+      <div class="code-block"><span class="kw">from</span> apscheduler.schedulers.background <span class="kw">import</span> BackgroundScheduler
+
+<span class="kw">def</span> <span class="fn">start_scheduler</span>():
+    scheduler = BackgroundScheduler(timezone=<span class="str">"Asia/Seoul"</span>)
+    scheduler.add_job(<span class="fn">collect_policies</span>,    <span class="str">"cron"</span>, hour=<span class="num">2</span>)
+    scheduler.add_job(<span class="fn">collect_financial</span>,   <span class="str">"cron"</span>, hour=<span class="num">3</span>)
+    scheduler.add_job(<span class="fn">update_days_left</span>,    <span class="str">"cron"</span>, hour=<span class="num">0</span>, minute=<span class="num">5</span>)
+    scheduler.add_job(<span class="fn">send_dday_alerts</span>,    <span class="str">"cron"</span>, hour=<span class="num">9</span>)
+    scheduler.add_job(<span class="fn">rebuild_faiss_index</span>, <span class="str">"cron"</span>, day_of_week=<span class="str">"sun"</span>, hour=<span class="num">4</span>)
+    scheduler.start()
+
+<span class="cmt"># main.py startup 이벤트에서 호출</span>
+<span class="kw">@</span><span class="fn">app.on_event</span>(<span class="str">"startup"</span>)
+<span class="kw">def</span> <span class="fn">startup_event</span>():
+    Base.metadata.create_all(bind=engine)
+    start_scheduler()</div>
+    </div>
+  </div>
+</div>
+
+<!-- §9 보안 -->
+<div class="section" id="s9">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div>
+        <div class="section-title">보안 설계</div>
+        <div class="section-desc">인증, 암호화, 입력 검증, 비밀 관리 등 보안 정책을 정의합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">JWT 인증 흐름</div>
+      <div class="flow">
+        <div class="flow-step">로그인 요청</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">bcrypt 검증</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">JWT 발급 (24h)</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step">클라이언트 저장</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">API 요청마다 Bearer 첨부</div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step active">서버 검증</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">보안 항목별 대책</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>위협</th><th>대책</th><th>구현 위치</th></tr></thead>
+          <tbody>
+            <tr><td>비밀번호 저장</td><td>DB 유출 시 평문 노출</td><td>bcrypt cost=12 해시 저장</td><td>core/security.py</td></tr>
+            <tr><td>JWT 서명</td><td>토큰 위조</td><td>HS256 알고리즘, SECRET_KEY 환경변수</td><td>core/security.py</td></tr>
+            <tr><td>JWT 만료</td><td>탈취 토큰 무제한 사용</td><td>ACCESS_TOKEN_EXPIRE=1440분 (24h)</td><td>core/config.py</td></tr>
+            <tr><td>SQL Injection</td><td>악성 쿼리 실행</td><td>SQLAlchemy ORM 파라미터 바인딩</td><td>모든 라우터</td></tr>
+            <tr><td>CORS</td><td>타사이트 API 호출</td><td>개발: Vite 프록시. 운영: origins 화이트리스트</td><td>main.py</td></tr>
+            <tr><td>비밀 정보 노출</td><td>API 키 소스코드 포함</td><td>모든 비밀 .env 관리, .gitignore 등록</td><td>backend/.env</td></tr>
+            <tr><td>입력 검증</td><td>잘못된 형식 요청</td><td>Pydantic 스키마 자동 검증</td><td>schemas/</td></tr>
+            <tr><td>apply_url XSS</td><td>javascript: URL 삽입</td><td>startsWith('http') 화이트리스트 검증</td><td>URL 렌더링 컴포넌트</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">security.py 구현</div>
+      <div class="code-block"><span class="kw">import</span> bcrypt
+<span class="kw">from</span> jose <span class="kw">import</span> jwt, JWTError
+
+<span class="kw">def</span> <span class="fn">hash_password</span>(password: str) -> str:
+    salt = bcrypt.gensalt()
+    <span class="kw">return</span> bcrypt.hashpw(password.encode(<span class="str">"utf-8"</span>), salt).decode(<span class="str">"utf-8"</span>)
+
+<span class="kw">def</span> <span class="fn">verify_password</span>(plain: str, hashed: str) -> bool:
+    <span class="kw">return</span> bcrypt.checkpw(plain.encode(<span class="str">"utf-8"</span>), hashed.encode(<span class="str">"utf-8"</span>))
+
+<span class="kw">def</span> <span class="fn">create_access_token</span>(data: dict, expires_delta: timedelta) -> str:
+    to_encode = data.copy()
+    to_encode[<span class="str">"exp"</span>] = datetime.utcnow() + expires_delta
+    <span class="kw">return</span> jwt.encode(to_encode, settings.SECRET_KEY, algorithm=<span class="str">"HS256"</span>)
+
+<span class="kw">def</span> <span class="fn">decode_token</span>(token: str) -> dict:
+    <span class="kw">try</span>:
+        <span class="kw">return</span> jwt.decode(token, settings.SECRET_KEY, algorithms=[<span class="str">"HS256"</span>])
+    <span class="kw">except</span> JWTError:
+        <span class="kw">raise</span> HTTPException(status_code=<span class="num">401</span>, detail=<span class="str">"Invalid token"</span>)</div>
+    </div>
+  </div>
+</div>
+
+<!-- §10 프론트엔드 -->
+<div class="section" id="s10">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div>
+        <div class="section-title">프론트엔드 컴포넌트 구조</div>
+        <div class="section-desc">각 페이지의 역할, 상태, API 연결을 정의합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">페이지별 명세</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>페이지</th><th>경로</th><th>API</th><th>주요 기능</th></tr></thead>
+          <tbody>
+            <tr><td><strong>LoginPage</strong></td><td>/login</td><td>POST /auth/login</td><td>JWT 수신 → authStore 저장 → /recommend 이동</td></tr>
+            <tr><td><strong>RegisterPage</strong></td><td>/register</td><td>POST /auth/register</td><td>회원가입 후 자동 로그인</td></tr>
+            <tr><td><strong>RecommendPage</strong></td><td>/recommend</td><td>GET /recommend/policies</td><td>카드 그리드, match_score 바, 북마크/외부링크 버튼</td></tr>
+            <tr><td><strong>PolicyDetailPage</strong></td><td>/policies/:id</td><td>GET /policies/:id</td><td>전체 필드 표시, 신청 버튼 (http 검증), 북마크</td></tr>
+            <tr><td><strong>AlertPage</strong></td><td>/alerts</td><td>GET /bookmarks, GET /alerts</td><td>D-7 긴급 섹션, 북마크 목록, DaysBadge 컬러 코딩</td></tr>
+            <tr><td><strong>FinancialPage</strong></td><td>/financial</td><td>GET /financial/products</td><td>적금/대출/펀드 탭, 이자율, 신청 링크</td></tr>
+            <tr><td><strong>ChatPage</strong></td><td>/chat</td><td>POST /chat/message</td><td>버블 UI, 빠른 질문 버튼, 로딩 인디케이터</td></tr>
+            <tr><td><strong>ProfilePage</strong></td><td>/profile</td><td>GET/PUT /profile</td><td>프로필 표시, 수정 모드 토글, 저장 → invalidate</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">API 클라이언트 (client.ts)</div>
+      <div class="code-block"><span class="kw">export const</span> apiClient = axios.create({
+  baseURL: <span class="str">'/api'</span>,   <span class="cmt">// Vite 프록시 → localhost:8001/api</span>
+})
+
+<span class="cmt">// 요청 인터셉터: JWT 자동 첨부</span>
+apiClient.interceptors.request.use((config) => {
+  <span class="kw">const</span> token = useAuthStore.getState().token
+  <span class="kw">if</span> (token) config.headers.Authorization = <span class="str">`Bearer ${token}`</span>
+  <span class="kw">return</span> config
+})
+
+<span class="cmt">// 응답 인터셉터: 401 → 자동 로그아웃</span>
+apiClient.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    <span class="kw">if</span> (err.response?.status === <span class="num">401</span>) {
+      useAuthStore.getState().logout()
+      window.location.href = <span class="str">'/login'</span>
+    }
+    <span class="kw">return</span> Promise.reject(err)
+  }
+)</div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">테마 토큰 (GlobalStyle.ts)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>토큰</th><th>값</th><th>용도</th></tr></thead>
+          <tbody>
+            <tr><td>colors.primary</td><td>#4F46E5</td><td>버튼, 링크, 활성 상태</td></tr>
+            <tr><td>colors.success</td><td>#10B981</td><td>성공, 상시 뱃지</td></tr>
+            <tr><td>colors.danger</td><td>#EF4444</td><td>마감 임박, 삭제</td></tr>
+            <tr><td>colors.surface</td><td>#FFFFFF</td><td>카드 배경</td></tr>
+            <tr><td>colors.border</td><td>#E2E8F0</td><td>구분선, 카드 테두리</td></tr>
+            <tr><td>radius.sm / md / lg</td><td>6px / 10px / 14px</td><td>버튼 / 카드 / 모달</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §11 환경 변수 -->
+<div class="section" id="s11">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div>
+        <div class="section-title">환경 변수 및 설정</div>
+        <div class="section-desc">백엔드 .env 파일에 필요한 모든 환경변수를 정의합니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">backend/.env 전체 항목</div>
+      <div class="code-block"><span class="cmt"># 데이터베이스</span>
+DATABASE_URL=<span class="str">sqlite:///./data/policies.db</span>
+
+<span class="cmt"># JWT 인증</span>
+SECRET_KEY=<span class="str">your-very-long-random-secret-key-here</span>
+ALGORITHM=<span class="str">HS256</span>
+ACCESS_TOKEN_EXPIRE_MINUTES=<span class="num">1440</span>
+
+<span class="cmt"># Google Gemini API</span>
+GOOGLE_API_KEY=<span class="str">AIza...</span>
+GENERATION_MODEL=<span class="str">gemini-2.5-flash</span>
+EMBEDDING_MODEL=<span class="str">text-embedding-004</span>
+
+<span class="cmt"># 외부 공공 API</span>
+YOUTH_POLICY_API_KEY=<span class="str">발급키...</span>
+FSS_API_KEY=<span class="str">발급키...</span>
+
+<span class="cmt"># 서버 설정</span>
+APP_HOST=<span class="str">0.0.0.0</span>
+APP_PORT=<span class="num">8001</span>
+DEBUG=<span class="str">false</span></div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">vite.config.ts 프록시 설정</div>
+      <div class="code-block"><span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  plugins: [react()],
+  server: {
+    proxy: {
+      <span class="str">'/api'</span>: {
+        target: <span class="str">'http://localhost:8001'</span>,
+        changeOrigin: <span class="kw">true</span>,
+      },
+    },
+  },
+})</div>
+      <div class="highlight">
+        <strong>프록시 원리:</strong> 브라우저에서 <code>/api/auth/login</code>으로 요청하면 Vite가 <code>http://localhost:8001/api/auth/login</code>으로 포워딩합니다. CORS 문제 없이 same-origin 처리됩니다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §12 개발 환경 -->
+<div class="section" id="s12">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <div>
+        <div class="section-title">개발 환경 구성 가이드</div>
+        <div class="section-desc">처음 프로젝트를 실행하는 사람을 위한 단계별 설정 방법입니다.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">사전 요구 사항</div>
+      <div class="chips">
+        <span class="chip chip-blue">Python 3.11+</span>
+        <span class="chip chip-green">Node.js 20+</span>
+        <span class="chip chip-purple">npm 10+</span>
+        <span class="chip chip-orange">Google AI Studio API Key</span>
+        <span class="chip chip-gray">Git</span>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">백엔드 설치 및 실행</div>
+      <div class="code-block"><span class="cmt"># 1. 가상환경 생성 및 활성화</span>
+cd backend
+python -m venv venv
+source venv/bin/activate      <span class="cmt"># Windows: venv\Scripts\activate</span>
+
+<span class="cmt"># 2. 의존성 설치</span>
+pip install -r requirements.txt
+
+<span class="cmt"># 3. 환경변수 파일 생성</span>
+cp .env.example .env
+<span class="cmt"># .env 열어서 GOOGLE_API_KEY, SECRET_KEY 입력</span>
+
+<span class="cmt"># 4. 서버 실행 (포트 8001)</span>
+uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+<span class="cmt"># 최초 실행 시 DB 테이블 자동 생성 (startup 이벤트)</span></div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">프론트엔드 설치 및 실행</div>
+      <div class="code-block"><span class="cmt"># 의존성 설치</span>
+cd frontend
+npm install
+
+<span class="cmt"># 개발 서버 실행 (포트 5173)</span>
+npm run dev
+<span class="cmt"># http://localhost:5173 접속</span>
+<span class="cmt"># /api 요청은 자동으로 http://localhost:8001/api 프록싱</span></div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">알려진 이슈 및 해결책</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>증상</th><th>원인</th><th>해결 방법</th></tr></thead>
+          <tbody>
+            <tr><td>포트 8001 이미 사용 중</td><td>좀비 uvicorn 프로세스</td><td><code>netstat -ano | findstr :8001</code> → <code>taskkill /PID &lt;pid&gt; /F</code></td></tr>
+            <tr><td>bcrypt 해시 오류</td><td>passlib + bcrypt 5.x 호환성</td><td>passlib 제거, 직접 bcrypt 라이브러리 사용 (적용됨)</td></tr>
+            <tr><td>Gemini 429 오류</td><td>모델 quota 소진</td><td>.env GENERATION_MODEL=gemini-2.5-flash 설정</td></tr>
+            <tr><td>embed_content 파라미터 오류</td><td>google-genai 1.68+ API 변경</td><td>content= → contents= 수정 (적용됨)</td></tr>
+            <tr><td>async engine 오류</td><td>sync SQLAlchemy에 async 사용</td><td>Base.metadata.create_all(bind=engine) 동기 방식 (적용됨)</td></tr>
+            <tr><td>apply_url 클릭 시 404</td><td>CSV NaN이 문자열 "nan"으로 저장</td><td>DB UPDATE + startsWith('http') 검증 (적용됨)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">requirements.txt 핵심 항목</div>
+      <div class="code-block">fastapi&gt;=0.115.0
+uvicorn[standard]&gt;=0.30.0
+sqlalchemy&gt;=2.0.0
+python-jose[cryptography]&gt;=3.3.0
+bcrypt&gt;=4.0.0
+google-genai&gt;=1.68.0
+faiss-cpu&gt;=1.8.0
+apscheduler&gt;=3.10.0
+pandas&gt;=2.0.0
+httpx&gt;=0.27.0
+pydantic-settings&gt;=2.0.0
+numpy&gt;=1.26.0</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>청년 금융 혜택 통합 플랫폼 — 개발상세정의서</strong><br>
+  v1.0 &nbsp;|&nbsp; 작성일: 2026.04.07 &nbsp;|&nbsp; FastAPI + React + Gemini 2.5 Flash + FAISS<br>
+  본 문서는 내부 개발 참고용이며, 시스템 변경 시 함께 업데이트해야 합니다.
+</div>
+
+
+
+</body>
+</html>
